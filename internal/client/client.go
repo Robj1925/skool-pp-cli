@@ -324,7 +324,7 @@ func (c *Client) dryRun(method, targetURL, path string, params map[string]string
 		if queryPrinted {
 			sep = "&"
 		}
-		fmt.Fprintf(os.Stderr, "  %s%s=%s\n", sep, "sentry_key", maskToken(authHeader))
+		fmt.Fprintf(os.Stderr, "  %s%s=%s\n", sep, "Cookie", maskToken(authHeader))
 		queryPrinted = true
 	}
 	_ = queryPrinted

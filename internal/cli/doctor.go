@@ -89,7 +89,7 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 				header := cfg.AuthHeader()
 				if header == "" {
 					report["auth"] = "not configured"
-					report["auth_hint"] = "export SKOOL_API_KEY=<your-key>"
+					report["auth_hint"] = "run 'skool-pp-cli auth set-token \"your-cookie\"'"
 				} else {
 					report["auth"] = "configured"
 					report["auth_source"] = cfg.AuthSource
@@ -173,11 +173,7 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 						report["credentials"] = "skipped (API unreachable)"
 					} else {
 						verifyPath := "/"
-						authParams := map[string]string{}
-						authHeaders := map[string]string{}
-						authParams["sentry_key"] = authHeader
-						authHeaders["User-Agent"] = "skool-pp-cli"
-						_, authErr := c.GetWithHeaders(verifyPath, authParams, authHeaders)
+						_, authErr := c.Get(verifyPath, nil)
 						var authAPIErr *client.APIError
 						switch {
 						case authErr == nil:
