@@ -703,6 +703,10 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 		}
 
 		switch resourceType {
+		case "members.json", "members":
+			if err := s.upsertMembersTx(tx, id, obj); err != nil {
+				return 0, extractFailures, fmt.Errorf("upserting member %s: %w", id, err)
+			}
 		}
 		stored++
 	}
@@ -717,6 +721,73 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 		return 0, extractFailures, err
 	}
 	return stored, extractFailures, nil
+}
+
+func (s *Store) upsertMembersTx(tx *sql.Tx, id string, obj map[string]any) error {
+	var name, email, role, joinedAt, lastActive string
+	var level, points, postCount int
+
+	if n, ok := obj["firstName"].(string); ok {
+		name = n
+		if l, ok := obj["lastName"].(string); ok {
+			name += " " + l
+		}
+	} else if n, ok := obj["name"].(string); ok {
+		name = n
+	}
+
+	if e, ok := obj["email"].(string); ok {
+		email = e
+	}
+
+	if m, ok := obj["member"].(map[string]any); ok {
+		if r, ok := m["role"].(string); ok {
+			role = r
+		}
+		if ja, ok := m["createdAt"].(string); ok {
+			joinedAt = ja
+		}
+		if lo, ok := m["lastOffline"].(string); ok {
+			lastActive = lo
+		}
+		if mm, ok := m["metadata"].(map[string]any); ok {
+			if np, ok := mm["numGenericPosts"].(float64); ok {
+				postCount = int(np)
+			}
+		}
+	}
+
+	if meta, ok := obj["metadata"].(map[string]any); ok {
+		if spData, ok := meta["spData"].(string); ok {
+			var sp map[string]float64
+			if err := json.Unmarshal([]byte(spData), &sp); err == nil {
+				level = int(sp["lv"])
+				points = int(sp["pts"])
+			}
+		}
+		if lastActive == "" {
+			if lo, ok := meta["lastOffline"].(float64); ok {
+				// nano to seconds
+				ts := int64(lo / 1e9)
+				lastActive = time.Unix(ts, 0).Format(time.RFC3339)
+			}
+		}
+	}
+
+	_, err := tx.Exec(`
+		INSERT INTO members (id, name, email, role, level, points, joined_at, last_active_at, post_count, synced_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+		ON CONFLICT(id) DO UPDATE SET
+			name = excluded.name,
+			email = excluded.email,
+			role = excluded.role,
+			level = excluded.level,
+			points = excluded.points,
+			last_active_at = excluded.last_active_at,
+			post_count = excluded.post_count,
+			synced_at = excluded.synced_at
+	`, id, name, email, role, level, points, joinedAt, lastActive, postCount)
+	return err
 }
 
 func (s *Store) SaveSyncState(resourceType, cursor string, count int) error {
