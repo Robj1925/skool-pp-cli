@@ -1,4 +1,4 @@
-module skool-pp-cli
+module github.com/Robj1925/skool-pp-cli
 
 go 1.26.3
 

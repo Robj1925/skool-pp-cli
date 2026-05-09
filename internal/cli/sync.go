@@ -6,11 +6,11 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Robj1925/skool-pp-cli/internal/store"
 	"github.com/spf13/cobra"
 	"net/url"
 	"os"
 	"regexp"
-	"skool-pp-cli/internal/store"
 	"strconv"
 	"strings"
 	"sync"

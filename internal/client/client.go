@@ -10,14 +10,14 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/Robj1925/skool-pp-cli/internal/cliutil"
+	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"io"
 	"math"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
-	"skool-pp-cli/internal/cliutil"
-	"skool-pp-cli/internal/config"
 	"sort"
 	"strings"
 	"time"
@@ -235,7 +235,7 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 			req.Header.Set(k, v)
 		}
 		if req.Header.Get("User-Agent") == "" {
-			req.Header.Set("User-Agent", "skool-pp-cli/0.1.0")
+			req.Header.Set("User-Agent", "github.com/Robj1925/skool-pp-cli/0.1.0")
 		}
 
 		resp, err := c.HTTPClient.Do(req)

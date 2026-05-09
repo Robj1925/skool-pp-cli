@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"skool-pp-cli/internal/cli"
+	"github.com/Robj1925/skool-pp-cli/internal/cli"
 )
 
 func main() {

@@ -12,14 +12,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Robj1925/skool-pp-cli/internal/cli"
+	"github.com/Robj1925/skool-pp-cli/internal/client"
+	"github.com/Robj1925/skool-pp-cli/internal/cliutil"
+	"github.com/Robj1925/skool-pp-cli/internal/config"
+	"github.com/Robj1925/skool-pp-cli/internal/mcp/cobratree"
+	"github.com/Robj1925/skool-pp-cli/internal/store"
 	mcplib "github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
-	"skool-pp-cli/internal/cli"
-	"skool-pp-cli/internal/client"
-	"skool-pp-cli/internal/cliutil"
-	"skool-pp-cli/internal/config"
-	"skool-pp-cli/internal/mcp/cobratree"
-	"skool-pp-cli/internal/store"
 )
 
 // RegisterTools registers all API operations as MCP tools.

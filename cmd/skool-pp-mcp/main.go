@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
+	mcptools "github.com/Robj1925/skool-pp-cli/internal/mcp"
 	"github.com/mark3labs/mcp-go/server"
-	mcptools "skool-pp-cli/internal/mcp"
 )
 
 func main() {

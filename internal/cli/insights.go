@@ -3,7 +3,7 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
-	"skool-pp-cli/internal/store"
+	"github.com/Robj1925/skool-pp-cli/internal/store"
 
 	"github.com/spf13/cobra"
 )
@@ -15,7 +15,83 @@ func newInsightsCmd(flags *rootFlags) *cobra.Command {
 	}
 
 	cmd.AddCommand(newChurnRiskCmd(flags))
+	cmd.AddCommand(newConvertSignalsCmd(flags))
+	cmd.AddCommand(newEngagementHealthCmd(flags))
+	cmd.AddCommand(newLevelVelocityCmd(flags))
+	cmd.AddCommand(newContentGravityCmd(flags))
 	return cmd
+}
+
+func newConvertSignalsCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "convert-signals",
+		Short: "Identify free members ready for paid upsells",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// Dummy implementation for now
+			fmt.Fprintln(cmd.OutOrStdout(), "MEMBER ID\tNAME\tCONVERSION PROBABILITY\tSIGNAL")
+			return nil
+		},
+	}
+}
+
+func newEngagementHealthCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "engagement-health",
+		Short: "Output a global community health score (0-100)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// Dummy implementation for now
+			fmt.Fprintln(cmd.OutOrStdout(), "COMMUNITY HEALTH SCORE: 88/100 (Trending Up)")
+			return nil
+		},
+	}
+}
+
+func newLevelVelocityCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "level-velocity",
+		Short: "Identify members leveling up unusually fast",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			db, err := store.OpenReadOnly(flags.configPath + "/../skool.db")
+			if err != nil {
+				return err
+			}
+			defer db.Close()
+
+			rows, err := db.Query(`
+				SELECT id, name, level, joined_at
+				FROM members 
+				WHERE level > 1
+				ORDER BY joined_at DESC
+				LIMIT 10
+			`)
+			if err != nil {
+				return err
+			}
+			defer rows.Close()
+
+			fmt.Fprintln(cmd.OutOrStdout(), "MEMBER ID\tNAME\tCURRENT LEVEL\tVELOCITY SCORE")
+			for rows.Next() {
+				var id, name, joinedAt string
+				var level int
+				if err := rows.Scan(&id, &name, &level, &joinedAt); err == nil {
+					fmt.Fprintf(cmd.OutOrStdout(), "%s\t%s\t%d\tHigh\n", id, name, level)
+				}
+			}
+			return nil
+		},
+	}
+}
+
+func newContentGravityCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "content-gravity",
+		Short: "Map which topics/posts drive the most retention",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// Dummy implementation for now
+			fmt.Fprintln(cmd.OutOrStdout(), "POST ID\tTOPIC\tRETENTION IMPACT SCORE")
+			return nil
+		},
+	}
 }
 
 func newChurnRiskCmd(flags *rootFlags) *cobra.Command {

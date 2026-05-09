@@ -13,9 +13,9 @@ import (
 	"text/tabwriter"
 	"time"
 
+	"github.com/Robj1925/skool-pp-cli/internal/client"
+	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"github.com/spf13/cobra"
-	"skool-pp-cli/internal/client"
-	"skool-pp-cli/internal/config"
 )
 
 var version = "1.0.0"
@@ -192,6 +192,7 @@ Run 'skool-pp-cli doctor' to verify auth and connectivity.`,
 	rootCmd.AddCommand(newWaitPromotedCmd(flags))
 	rootCmd.AddCommand(newVersionCliCmd())
 	rootCmd.AddCommand(newInsightsCmd(flags))
+	rootCmd.AddCommand(newAnalyticsDomainCmd(flags))
 
 	return rootCmd
 }

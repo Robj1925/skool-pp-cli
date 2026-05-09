@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/Robj1925/skool-pp-cli/internal/store"
 	"github.com/spf13/cobra"
-	"skool-pp-cli/internal/store"
 )
 
 func newWorkflowCmd(flags *rootFlags) *cobra.Command {

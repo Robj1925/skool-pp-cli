@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"github.com/spf13/cobra"
-	"skool-pp-cli/internal/config"
 )
 
 func newAuthCmd(flags *rootFlags) *cobra.Command {
@@ -20,8 +20,45 @@ func newAuthCmd(flags *rootFlags) *cobra.Command {
 	cmd.AddCommand(newAuthStatusCmd(flags))
 	cmd.AddCommand(newAuthSetTokenCmd(flags))
 	cmd.AddCommand(newAuthLogoutCmd(flags))
+	cmd.AddCommand(newAuthRefreshCmd(flags))
 
 	return cmd
+}
+
+func newAuthRefreshCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "refresh",
+		Short: "Get step-by-step instructions for refreshing your Skool session",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			msg := `
+SKOOL AUTH REFRESH RUNBOOK
+==========================
+
+Because Skool does not offer a public API, this CLI relies on your active browser session cookie. If your commands start failing with 401 Unauthorized or 403 Forbidden, your session has likely expired.
+
+Follow these steps to recapture your session:
+
+1. Open an incognito/private browser window.
+2. Go to skool.com and log in with your credentials.
+3. Open Developer Tools (F12 or Right Click -> Inspect).
+4. Go to the 'Network' tab.
+5. Click on any community or page to trigger some network requests.
+6. Look for a request to an endpoint like 'members.json' or 'analytics'.
+7. Click the request, go to the 'Headers' tab, and find the 'Request Headers' section.
+8. Look for the 'cookie:' header. Right-click and copy the entire string.
+9. Run this command to save your new cookie:
+   
+   skool-pp-cli auth set-token "YOUR_COPIED_COOKIE_STRING"
+
+Alternatively, to capture all endpoints via a new HAR file:
+1. Export the Network tab as a .har file.
+2. Replace your local skool-capture.har file.
+3. Use the 'har update' runbook to re-extract endpoints if the Skool API changed.
+`
+			fmt.Fprintln(cmd.OutOrStdout(), msg)
+			return nil
+		},
+	}
 }
 
 func newAuthStatusCmd(flags *rootFlags) *cobra.Command {
