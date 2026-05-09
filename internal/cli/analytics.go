@@ -3,7 +3,9 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"github.com/Robj1925/skool-pp-cli/internal/store"
+	"path/filepath"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -28,7 +30,11 @@ func newStaleCmd(flags *rootFlags) *cobra.Command {
 		Use:   "stale",
 		Short: "Members with no recent activity",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			db, err := store.OpenReadOnly(flags.configPath + "/../skool.db")
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			db, err := store.OpenReadOnly(filepath.Join(filepath.Dir(cfg.Path), "skool.db"))
 			if err != nil {
 				return fmt.Errorf("local store not available. Run 'skool-pp-cli sync' first. Error: %w", err)
 			}
@@ -81,7 +87,11 @@ func newOrphansCmd(flags *rootFlags) *cobra.Command {
 		Use:   "orphans",
 		Short: "Members who joined but never posted",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			db, err := store.OpenReadOnly(flags.configPath + "/../skool.db")
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			db, err := store.OpenReadOnly(filepath.Join(filepath.Dir(cfg.Path), "skool.db"))
 			if err != nil {
 				return fmt.Errorf("local store not available. Run 'skool-pp-cli sync' first. Error: %w", err)
 			}
@@ -134,7 +144,11 @@ func newTopContributorsCmd(flags *rootFlags) *cobra.Command {
 		Use:   "top-contributors",
 		Short: "Most active members based on points/levels",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			db, err := store.OpenReadOnly(flags.configPath + "/../skool.db")
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			db, err := store.OpenReadOnly(filepath.Join(filepath.Dir(cfg.Path), "skool.db"))
 			if err != nil {
 				return fmt.Errorf("local store not available. Run 'skool-pp-cli sync' first. Error: %w", err)
 			}

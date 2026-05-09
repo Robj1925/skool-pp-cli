@@ -3,7 +3,9 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"github.com/Robj1925/skool-pp-cli/internal/store"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
@@ -51,7 +53,11 @@ func newLevelVelocityCmd(flags *rootFlags) *cobra.Command {
 		Use:   "level-velocity",
 		Short: "Identify members leveling up unusually fast",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			db, err := store.OpenReadOnly(flags.configPath + "/../skool.db")
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			db, err := store.OpenReadOnly(filepath.Join(filepath.Dir(cfg.Path), "skool.db"))
 			if err != nil {
 				return err
 			}
@@ -99,7 +105,11 @@ func newChurnRiskCmd(flags *rootFlags) *cobra.Command {
 		Use:   "churn-risk",
 		Short: "Score every member 0-100 on churn probability",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			db, err := store.OpenReadOnly(flags.configPath + "/../skool.db")
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			db, err := store.OpenReadOnly(filepath.Join(filepath.Dir(cfg.Path), "skool.db"))
 			if err != nil {
 				return fmt.Errorf("local store not available. Run 'skool-pp-cli sync' first. Error: %w", err)
 			}
