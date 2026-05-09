@@ -170,6 +170,7 @@ Run 'skool-pp-cli doctor' to verify auth and connectivity.`,
 	rootCmd.AddCommand(newNextCmd(flags))
 	rootCmd.AddCommand(newAffiliatesCmd(flags))
 	rootCmd.AddCommand(newGroupsCmd(flags))
+	rootCmd.AddCommand(newPostsCmd(flags))
 	rootCmd.AddCommand(newMapsCmd(flags))
 	rootCmd.AddCommand(newTilesCmd(flags))
 	rootCmd.AddCommand(newDoctorCmd(flags))

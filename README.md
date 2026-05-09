@@ -98,12 +98,32 @@ skool-pp-cli insights level-velocity
 
 | Command | Description |
 | --- | --- |
+| `posts create` | Create a new post in a group. |
 | `sync` | Fetches all data from Skool and stores it locally. |
 | `analytics-domain` | Advanced reports on member status and contributions. |
 | `insights` | Predictive analytics (Churn, Velocity, Health). |
 | `auth set-token` | Configures your session cookie. |
 | `doctor` | Connectivity and auth health check. |
 | `search` | Instant full-text search across your local community data. |
+
+### ✍️ Writing Content
+
+You can create posts in any group where you have permission. You need the group's unique hash (found in the URL or via `skool-pp-cli groups list`).
+
+```bash
+# Create a post (defaults to 'General discussion' category)
+skool-pp-cli posts create <group-hash> \
+  --title "My New Post" \
+  --content "This is the body of the post. Supports markdown!"
+
+# Create a post in a specific category
+skool-pp-cli posts create <group-hash> \
+  --title "Q&A" \
+  --content "Ask me anything!" \
+  --category-id <category-id>
+```
+
+**Note:** The Skool API requires a category ID for every post. If `--category-id` is omitted, the CLI defaults to the "General discussion" category.
 
 ---
 

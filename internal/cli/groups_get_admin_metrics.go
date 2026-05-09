@@ -30,10 +30,10 @@ func newGroupsGetAdminMetricsCmd(flags *rootFlags) *cobra.Command {
 			}
 
 			path := "/groups/{hash}/admin-metrics"
-			if len(args) < 2 {
+			if len(args) < 1 {
 				return usageErr(fmt.Errorf("hash is required\nUsage: %s <%s>", cmd.CommandPath(), "hash"))
 			}
-			path = replacePathParam(path, "hash", args[1])
+			path = replacePathParam(path, "hash", args[0])
 			params := map[string]string{}
 			if flagAmt != "" {
 				params["amt"] = fmt.Sprintf("%v", flagAmt)
