@@ -30,10 +30,10 @@ func newNextGetMembersJsonCmd(flags *rootFlags) *cobra.Command {
 			}
 
 			path := "/_next/data/{id}/ai-academy-with-robby-6849/-/members.json"
-			if len(args) < 2 {
+			if len(args) < 1 {
 				return usageErr(fmt.Errorf("id is required\nUsage: %s <%s>", cmd.CommandPath(), "id"))
 			}
-			path = replacePathParam(path, "id", args[1])
+			path = replacePathParam(path, "id", args[0])
 			params := map[string]string{}
 			if flagGroup != "" {
 				params["group"] = fmt.Sprintf("%v", flagGroup)

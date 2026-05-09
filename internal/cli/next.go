@@ -9,7 +9,7 @@ import (
 
 func newNextCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "-next",
+		Use:   "next",
 		Short: "Operations on members.json",
 	}
 

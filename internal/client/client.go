@@ -6,7 +6,6 @@ package client
 import (
 	"bytes"
 	"crypto/sha256"
-	"crypto/tls"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -47,7 +46,6 @@ func (e *APIError) Error() string {
 
 func newHTTPClient(timeout time.Duration, jar http.CookieJar) *http.Client {
 	transport := http.DefaultTransport.(*http.Transport).Clone()
-	transport.TLSNextProto = make(map[string]func(authority string, c *tls.Conn) http.RoundTripper)
 	return &http.Client{Timeout: timeout, Jar: jar, Transport: transport}
 }
 
@@ -220,10 +218,8 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 		}
 
 		if authHeader != "" {
-			// API key goes in query parameter
-			q := req.URL.Query()
-			q.Set("sentry_key", authHeader)
-			req.URL.RawQuery = q.Encode()
+			// Add as cookie instead of sentry_key query param
+			req.Header.Set("Cookie", authHeader)
 		}
 		if c.Config != nil {
 			for k, v := range c.Config.Headers {
