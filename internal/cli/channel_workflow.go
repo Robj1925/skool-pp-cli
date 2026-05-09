@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"skool-pp-cli/internal/store"
 	"github.com/spf13/cobra"
+	"skool-pp-cli/internal/store"
 )
 
 func newWorkflowCmd(flags *rootFlags) *cobra.Command {
@@ -55,7 +55,7 @@ and full resync. After archiving, use 'search' for instant full-text search.`,
 			}
 			defer s.Close()
 
-			resources := []string{"017ae153ccc5", "affiliates", "maps", "maps-streets-v2-sprite-json", "tiles", "wait",  }
+			resources := []string{"017ae153ccc5", "affiliates", "maps", "maps-streets-v2-sprite-json", "tiles", "wait"}
 			totalSynced := 0
 
 			for _, resource := range resources {
@@ -94,7 +94,9 @@ and full resync. After archiving, use 'search' for instant full-text search.`,
 						break
 					}
 					for _, item := range items {
-						var obj struct{ ID string `json:"id"` }
+						var obj struct {
+							ID string `json:"id"`
+						}
 						json.Unmarshal(item, &obj)
 						id := obj.ID
 						if id == "" {

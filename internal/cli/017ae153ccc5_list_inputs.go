@@ -15,9 +15,9 @@ func newV017ae153ccc5ListInputsCmd(flags *rootFlags) *cobra.Command {
 	var flagClient string
 
 	cmd := &cobra.Command{
-		Use:   "list-inputs",
-		Short: "GET /017ae153ccc5/4aa4380fa03e/inputs",
-		Example: "  skool-pp-cli 017ae153ccc5 list-inputs",
+		Use:         "list-inputs",
+		Short:       "GET /017ae153ccc5/4aa4380fa03e/inputs",
+		Example:     "  skool-pp-cli 017ae153ccc5 list-inputs",
 		Annotations: map[string]string{"pp:endpoint": "017ae153ccc5.list_inputs", "pp:method": "GET", "pp:path": "/017ae153ccc5/4aa4380fa03e/inputs", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

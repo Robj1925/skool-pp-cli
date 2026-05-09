@@ -14,9 +14,9 @@ import (
 func newGroupsGetAnalyticsGrowthOverviewV2Cmd(flags *rootFlags) *cobra.Command {
 
 	cmd := &cobra.Command{
-		Use:   "get-analytics-growth-overview-v2 <hash>",
-		Short: "GET /groups/{hash}/analytics-growth-overview-v2",
-		Example: "  skool-pp-cli groups get-analytics-growth-overview-v2 example-value",
+		Use:         "get-analytics-growth-overview-v2 <hash>",
+		Short:       "GET /groups/{hash}/analytics-growth-overview-v2",
+		Example:     "  skool-pp-cli groups get-analytics-growth-overview-v2 example-value",
 		Annotations: map[string]string{"pp:endpoint": "groups.get_analytics_growth_overview_v2", "pp:method": "GET", "pp:path": "/groups/{hash}/analytics-growth-overview-v2", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

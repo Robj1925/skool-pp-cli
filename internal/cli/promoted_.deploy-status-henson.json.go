@@ -16,10 +16,10 @@ func newDeployStatusHensonJsonPromotedCmd(flags *rootFlags) *cobra.Command {
 	var flagDeployedRevisions string
 
 	cmd := &cobra.Command{
-		Use:   ".deploy-status-henson.json",
-		Short: "GET /v3/.deploy_status_henson.json",
-		Long:  "Shortcut for '.deploy_status_henson.json list_.deploy_status_henson.json'. GET /v3/.deploy_status_henson.json",
-		Example: "  skool-pp-cli .deploy-status-henson.json --canary-percentage 42 --deployed-revisions example-value",
+		Use:         ".deploy-status-henson.json",
+		Short:       "GET /v3/.deploy_status_henson.json",
+		Long:        "Shortcut for '.deploy_status_henson.json list_.deploy_status_henson.json'. GET /v3/.deploy_status_henson.json",
+		Example:     "  skool-pp-cli .deploy-status-henson.json --canary-percentage 42 --deployed-revisions example-value",
 		Annotations: map[string]string{"pp:endpoint": ".deploy_status_henson.json.list_.deploy_status_henson.json", "pp:method": "GET", "pp:path": "/v3/.deploy_status_henson.json", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if !cmd.Flags().Changed("canary-percentage") && !flags.dryRun {

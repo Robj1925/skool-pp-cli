@@ -16,9 +16,9 @@ func newGroupsGetAdminMetricsCmd(flags *rootFlags) *cobra.Command {
 	var flagRange string
 
 	cmd := &cobra.Command{
-		Use:   "get-admin-metrics <hash>",
-		Short: "GET /groups/{hash}/admin-metrics",
-		Example: "  skool-pp-cli groups get-admin-metrics example-value",
+		Use:         "get-admin-metrics <hash>",
+		Short:       "GET /groups/{hash}/admin-metrics",
+		Example:     "  skool-pp-cli groups get-admin-metrics example-value",
 		Annotations: map[string]string{"pp:endpoint": "groups.get_admin_metrics", "pp:method": "GET", "pp:path": "/groups/{hash}/admin-metrics", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

@@ -14,10 +14,10 @@ import (
 func newWaitPromotedCmd(flags *rootFlags) *cobra.Command {
 
 	cmd := &cobra.Command{
-		Use:   "wait",
-		Short: "GET /wait",
-		Long:  "Shortcut for 'wait list_wait'. GET /wait",
-		Example: "  skool-pp-cli wait",
+		Use:         "wait",
+		Short:       "GET /wait",
+		Long:        "Shortcut for 'wait list_wait'. GET /wait",
+		Example:     "  skool-pp-cli wait",
 		Annotations: map[string]string{"pp:endpoint": "wait.list_wait", "pp:method": "GET", "pp:path": "/wait", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

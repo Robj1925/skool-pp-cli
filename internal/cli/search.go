@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"skool-pp-cli/internal/store"
 	"github.com/spf13/cobra"
+	"skool-pp-cli/internal/store"
 )
 
 // isNilOrEmpty checks whether a JSON object has nil or empty values for

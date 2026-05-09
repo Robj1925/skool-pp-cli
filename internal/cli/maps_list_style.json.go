@@ -15,9 +15,9 @@ func newMapsListStyleJsonCmd(flags *rootFlags) *cobra.Command {
 	var flagMtsid string
 
 	cmd := &cobra.Command{
-		Use:   "list-style.json",
-		Short: "GET /maps/streets-v2/style.json",
-		Example: "  skool-pp-cli maps list-style.json",
+		Use:         "list-style.json",
+		Short:       "GET /maps/streets-v2/style.json",
+		Example:     "  skool-pp-cli maps list-style.json",
 		Annotations: map[string]string{"pp:endpoint": "maps.list_style.json", "pp:method": "GET", "pp:path": "/maps/streets-v2/style.json", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

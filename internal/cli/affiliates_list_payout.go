@@ -21,9 +21,9 @@ func newAffiliatesListPayoutCmd(flags *rootFlags) *cobra.Command {
 	var flagSetupStatus string
 
 	cmd := &cobra.Command{
-		Use:   "list-payout",
-		Short: "GET /affiliates/payout",
-		Example: "  skool-pp-cli affiliates list-payout --code example-value --currency example-value --last-30-days 42 --lifetime 2026-01-15T09:00:00Z --payable 42 --pending 42 --setup-status example-value",
+		Use:         "list-payout",
+		Short:       "GET /affiliates/payout",
+		Example:     "  skool-pp-cli affiliates list-payout --code example-value --currency example-value --last-30-days 42 --lifetime 2026-01-15T09:00:00Z --payable 42 --pending 42 --setup-status example-value",
 		Annotations: map[string]string{"pp:endpoint": "affiliates.list_payout", "pp:method": "GET", "pp:path": "/affiliates/payout", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if !cmd.Flags().Changed("code") && !flags.dryRun {

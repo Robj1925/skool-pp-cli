@@ -15,9 +15,9 @@ func newGroupsGetMemberCoursePermissionsCmd(flags *rootFlags) *cobra.Command {
 	var flagMember string
 
 	cmd := &cobra.Command{
-		Use:   "get-member-course-permissions <hash>",
-		Short: "GET /groups/{hash}/member-course-permissions",
-		Example: "  skool-pp-cli groups get-member-course-permissions example-value",
+		Use:         "get-member-course-permissions <hash>",
+		Short:       "GET /groups/{hash}/member-course-permissions",
+		Example:     "  skool-pp-cli groups get-member-course-permissions example-value",
 		Annotations: map[string]string{"pp:endpoint": "groups.get_member_course_permissions", "pp:method": "GET", "pp:path": "/groups/{hash}/member-course-permissions", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

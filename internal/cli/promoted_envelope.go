@@ -16,10 +16,10 @@ func newEnvelopePromotedCmd(flags *rootFlags) *cobra.Command {
 	var flagSentryVersion int
 
 	cmd := &cobra.Command{
-		Use:   "envelope <id>",
-		Short: "POST /api/{id}/envelope/",
-		Long:  "Shortcut for 'envelope create_envelope'. POST /api/{id}/envelope/",
-		Example: "  skool-pp-cli envelope 550e8400-e29b-41d4-a716-446655440000",
+		Use:         "envelope <id>",
+		Short:       "POST /api/{id}/envelope/",
+		Long:        "Shortcut for 'envelope create_envelope'. POST /api/{id}/envelope/",
+		Example:     "  skool-pp-cli envelope 550e8400-e29b-41d4-a716-446655440000",
 		Annotations: map[string]string{"pp:endpoint": "envelope.create_envelope", "pp:method": "POST", "pp:path": "/api/{id}/envelope/"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

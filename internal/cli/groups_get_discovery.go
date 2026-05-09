@@ -14,9 +14,9 @@ import (
 func newGroupsGetDiscoveryCmd(flags *rootFlags) *cobra.Command {
 
 	cmd := &cobra.Command{
-		Use:   "get-discovery <hash>",
-		Short: "GET /groups/{hash}/discovery",
-		Example: "  skool-pp-cli groups get-discovery example-value",
+		Use:         "get-discovery <hash>",
+		Short:       "GET /groups/{hash}/discovery",
+		Example:     "  skool-pp-cli groups get-discovery example-value",
 		Annotations: map[string]string{"pp:endpoint": "groups.get_discovery", "pp:method": "GET", "pp:path": "/groups/{hash}/discovery", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

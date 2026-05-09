@@ -15,9 +15,9 @@ func newNextGetAboutJsonCmd(flags *rootFlags) *cobra.Command {
 	var flagGroup string
 
 	cmd := &cobra.Command{
-		Use:   "get-about.json <id>",
-		Short: "GET /_next/data/{id}/ai-academy-with-robby-6849/about.json",
-		Example: "  skool-pp-cli _next get-about.json 550e8400-e29b-41d4-a716-446655440000",
+		Use:         "get-about.json <id>",
+		Short:       "GET /_next/data/{id}/ai-academy-with-robby-6849/about.json",
+		Example:     "  skool-pp-cli _next get-about.json 550e8400-e29b-41d4-a716-446655440000",
 		Annotations: map[string]string{"pp:endpoint": "_next.get_about.json", "pp:method": "GET", "pp:path": "/_next/data/{id}/ai-academy-with-robby-6849/about.json", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

@@ -15,8 +15,8 @@ import (
 	mcplib "github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 	"skool-pp-cli/internal/cli"
-	"skool-pp-cli/internal/cliutil"
 	"skool-pp-cli/internal/client"
+	"skool-pp-cli/internal/cliutil"
 	"skool-pp-cli/internal/config"
 	"skool-pp-cli/internal/mcp/cobratree"
 	"skool-pp-cli/internal/store"
@@ -33,7 +33,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/v3/.deploy_status_henson.json", []mcpParamBinding{{PublicName: "canaryPercentage", WireName: "canaryPercentage", Location: "query"},{PublicName: "deployedRevisions", WireName: "deployedRevisions", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/v3/.deploy_status_henson.json", []mcpParamBinding{{PublicName: "canaryPercentage", WireName: "canaryPercentage", Location: "query"}, {PublicName: "deployedRevisions", WireName: "deployedRevisions", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("017ae153ccc5_create_mp_verify",
@@ -42,7 +42,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/017ae153ccc5/4aa4380fa03e/mp_verify", []mcpParamBinding{{PublicName: "token", WireName: "token", Location: "query"}, }, []string{ }),
+		makeAPIHandler("POST", "/017ae153ccc5/4aa4380fa03e/mp_verify", []mcpParamBinding{{PublicName: "token", WireName: "token", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("017ae153ccc5_create_telemetry",
@@ -53,7 +53,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/017ae153ccc5/4aa4380fa03e/telemetry", []mcpParamBinding{{PublicName: "awswaf_session_storage", WireName: "awswaf_session_storage", Location: "query"},{PublicName: "next_interval", WireName: "next_interval", Location: "query"},{PublicName: "token", WireName: "token", Location: "query"}, }, []string{ }),
+		makeAPIHandler("POST", "/017ae153ccc5/4aa4380fa03e/telemetry", []mcpParamBinding{{PublicName: "awswaf_session_storage", WireName: "awswaf_session_storage", Location: "query"}, {PublicName: "next_interval", WireName: "next_interval", Location: "query"}, {PublicName: "token", WireName: "token", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("017ae153ccc5_list_inputs",
@@ -63,7 +63,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/017ae153ccc5/4aa4380fa03e/inputs", []mcpParamBinding{{PublicName: "client", WireName: "client", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/017ae153ccc5/4aa4380fa03e/inputs", []mcpParamBinding{{PublicName: "client", WireName: "client", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("_next_get_about.json",
@@ -74,7 +74,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/about.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"},{PublicName: "id", WireName: "id", Location: "path"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/about.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"}, {PublicName: "id", WireName: "id", Location: "path"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("_next_get_calendar.json",
@@ -85,7 +85,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/calendar.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"},{PublicName: "id", WireName: "id", Location: "path"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/calendar.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"}, {PublicName: "id", WireName: "id", Location: "path"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("_next_get_classroom.json",
@@ -96,7 +96,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/classroom.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"},{PublicName: "id", WireName: "id", Location: "path"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/classroom.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"}, {PublicName: "id", WireName: "id", Location: "path"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("_next_get_leaderboards.json",
@@ -107,7 +107,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/-/leaderboards.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"},{PublicName: "id", WireName: "id", Location: "path"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/-/leaderboards.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"}, {PublicName: "id", WireName: "id", Location: "path"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("_next_get_map.json",
@@ -119,7 +119,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/-/map.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"},{PublicName: "id", WireName: "id", Location: "path"},{PublicName: "is", WireName: "is", Location: "query"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/-/map.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"}, {PublicName: "id", WireName: "id", Location: "path"}, {PublicName: "is", WireName: "is", Location: "query"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("_next_get_members.json",
@@ -131,7 +131,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/-/members.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"},{PublicName: "id", WireName: "id", Location: "path"},{PublicName: "t", WireName: "t", Location: "query"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/_next/data/{id}/ai-academy-with-robby-6849/-/members.json", []mcpParamBinding{{PublicName: "group", WireName: "group", Location: "query"}, {PublicName: "id", WireName: "id", Location: "path"}, {PublicName: "t", WireName: "t", Location: "query"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("affiliates_list_compensations",
@@ -145,7 +145,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/affiliates/v2/compensations", []mcpParamBinding{{PublicName: "cancelled", WireName: "cancelled", Location: "query"},{PublicName: "group_id", WireName: "group_id", Location: "query"},{PublicName: "limit", WireName: "limit", Location: "query"},{PublicName: "offset", WireName: "offset", Location: "query"},{PublicName: "type", WireName: "type", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/affiliates/v2/compensations", []mcpParamBinding{{PublicName: "cancelled", WireName: "cancelled", Location: "query"}, {PublicName: "group_id", WireName: "group_id", Location: "query"}, {PublicName: "limit", WireName: "limit", Location: "query"}, {PublicName: "offset", WireName: "offset", Location: "query"}, {PublicName: "type", WireName: "type", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("affiliates_list_payout",
@@ -161,7 +161,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/affiliates/payout", []mcpParamBinding{{PublicName: "code", WireName: "code", Location: "query"},{PublicName: "currency", WireName: "currency", Location: "query"},{PublicName: "last_30_days", WireName: "last_30_days", Location: "query"},{PublicName: "lifetime", WireName: "lifetime", Location: "query"},{PublicName: "payable", WireName: "payable", Location: "query"},{PublicName: "pending", WireName: "pending", Location: "query"},{PublicName: "setup_status", WireName: "setup_status", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/affiliates/payout", []mcpParamBinding{{PublicName: "code", WireName: "code", Location: "query"}, {PublicName: "currency", WireName: "currency", Location: "query"}, {PublicName: "last_30_days", WireName: "last_30_days", Location: "query"}, {PublicName: "lifetime", WireName: "lifetime", Location: "query"}, {PublicName: "payable", WireName: "payable", Location: "query"}, {PublicName: "pending", WireName: "pending", Location: "query"}, {PublicName: "setup_status", WireName: "setup_status", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("affiliates_options_compensations",
@@ -173,7 +173,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithString("type", mcplib.Description("")),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("OPTIONS", "/affiliates/v2/compensations", []mcpParamBinding{{PublicName: "cancelled", WireName: "cancelled", Location: "query"},{PublicName: "group_id", WireName: "group_id", Location: "query"},{PublicName: "limit", WireName: "limit", Location: "query"},{PublicName: "offset", WireName: "offset", Location: "query"},{PublicName: "type", WireName: "type", Location: "query"}, }, []string{ }),
+		makeAPIHandler("OPTIONS", "/affiliates/v2/compensations", []mcpParamBinding{{PublicName: "cancelled", WireName: "cancelled", Location: "query"}, {PublicName: "group_id", WireName: "group_id", Location: "query"}, {PublicName: "limit", WireName: "limit", Location: "query"}, {PublicName: "offset", WireName: "offset", Location: "query"}, {PublicName: "type", WireName: "type", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("b_create_b",
@@ -184,7 +184,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/b", []mcpParamBinding{{PublicName: "client_id", WireName: "client_id", Location: "body"},{PublicName: "events", WireName: "events", Location: "body"},{PublicName: "num_requests", WireName: "num_requests", Location: "body"}, }, []string{ }),
+		makeAPIHandler("POST", "/b", []mcpParamBinding{{PublicName: "client_id", WireName: "client_id", Location: "body"}, {PublicName: "events", WireName: "events", Location: "body"}, {PublicName: "num_requests", WireName: "num_requests", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("default_create_endpoint",
@@ -193,7 +193,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/{id}", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"}, }, []string{"id", }),
+		makeAPIHandler("POST", "/{id}", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("envelope_create_envelope",
@@ -204,7 +204,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/api/{id}/envelope/", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"},{PublicName: "sentry_client", WireName: "sentry_client", Location: "query"},{PublicName: "sentry_version", WireName: "sentry_version", Location: "query"}, }, []string{"id", }),
+		makeAPIHandler("POST", "/api/{id}/envelope/", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"}, {PublicName: "sentry_client", WireName: "sentry_client", Location: "query"}, {PublicName: "sentry_version", WireName: "sentry_version", Location: "query"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("f_get_f",
@@ -216,7 +216,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/f/{hash}/{hash}", []mcpParamBinding{{PublicName: "Expires", WireName: "Expires", Location: "query"},{PublicName: "Signature", WireName: "Signature", Location: "query"},{PublicName: "hash", WireName: "hash", Location: "path"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/f/{hash}/{hash}", []mcpParamBinding{{PublicName: "Expires", WireName: "Expires", Location: "query"}, {PublicName: "Signature", WireName: "Signature", Location: "query"}, {PublicName: "hash", WireName: "hash", Location: "path"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_create_count_pending_invites",
@@ -225,7 +225,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/groups/{hash}/count-pending-invites", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}, }, []string{"hash", }),
+		makeAPIHandler("POST", "/groups/{hash}/count-pending-invites", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_get_admin_metrics",
@@ -237,7 +237,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/groups/{hash}/admin-metrics", []mcpParamBinding{{PublicName: "amt", WireName: "amt", Location: "query"},{PublicName: "hash", WireName: "hash", Location: "path"},{PublicName: "range", WireName: "range", Location: "query"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/groups/{hash}/admin-metrics", []mcpParamBinding{{PublicName: "amt", WireName: "amt", Location: "query"}, {PublicName: "hash", WireName: "hash", Location: "path"}, {PublicName: "range", WireName: "range", Location: "query"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_get_analytics_growth_overview_v2",
@@ -247,7 +247,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/groups/{hash}/analytics-growth-overview-v2", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/groups/{hash}/analytics-growth-overview-v2", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_get_analytics_overview_v2",
@@ -257,7 +257,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/groups/{hash}/analytics-overview-v2", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/groups/{hash}/analytics-overview-v2", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_get_billing_payout_data",
@@ -269,7 +269,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/groups/{hash}/billing-payout-data", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"},{PublicName: "limit", WireName: "limit", Location: "query"},{PublicName: "offset", WireName: "offset", Location: "query"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/groups/{hash}/billing-payout-data", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}, {PublicName: "limit", WireName: "limit", Location: "query"}, {PublicName: "offset", WireName: "offset", Location: "query"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_get_discovery",
@@ -279,7 +279,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/groups/{hash}/discovery", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/groups/{hash}/discovery", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("groups_get_member_course_permissions",
@@ -290,7 +290,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/groups/{hash}/member-course-permissions", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"},{PublicName: "member", WireName: "member", Location: "query"}, }, []string{"hash", }),
+		makeAPIHandler("GET", "/groups/{hash}/member-course-permissions", []mcpParamBinding{{PublicName: "hash", WireName: "hash", Location: "path"}, {PublicName: "member", WireName: "member", Location: "query"}}, []string{"hash"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("maps_list_sprite.json",
@@ -300,7 +300,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/maps/streets-v2/sprite.json", []mcpParamBinding{{PublicName: "mtsid", WireName: "mtsid", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/maps/streets-v2/sprite.json", []mcpParamBinding{{PublicName: "mtsid", WireName: "mtsid", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("maps_list_style.json",
@@ -310,7 +310,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/maps/streets-v2/style.json", []mcpParamBinding{{PublicName: "mtsid", WireName: "mtsid", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/maps/streets-v2/style.json", []mcpParamBinding{{PublicName: "mtsid", WireName: "mtsid", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("tiles_get_1.pbf",
@@ -321,7 +321,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/tiles/v3/{id}/{id}/1.pbf", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"},{PublicName: "mtsid", WireName: "mtsid", Location: "query"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/tiles/v3/{id}/{id}/1.pbf", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"}, {PublicName: "mtsid", WireName: "mtsid", Location: "query"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("tiles_get_2.pbf",
@@ -332,7 +332,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/tiles/v3/{id}/{id}/2.pbf", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"},{PublicName: "mtsid", WireName: "mtsid", Location: "query"}, }, []string{"id", }),
+		makeAPIHandler("GET", "/tiles/v3/{id}/{id}/2.pbf", []mcpParamBinding{{PublicName: "id", WireName: "id", Location: "path"}, {PublicName: "mtsid", WireName: "mtsid", Location: "query"}}, []string{"id"}),
 	)
 	s.AddTool(
 		mcplib.NewTool("tiles_list_tiles.json",
@@ -342,7 +342,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/tiles/v3/tiles.json", []mcpParamBinding{{PublicName: "mtsid", WireName: "mtsid", Location: "query"}, }, []string{ }),
+		makeAPIHandler("GET", "/tiles/v3/tiles.json", []mcpParamBinding{{PublicName: "mtsid", WireName: "mtsid", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
 		mcplib.NewTool("wait_list_wait",
@@ -351,7 +351,7 @@ func RegisterTools(s *server.MCPServer) {
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("GET", "/wait", []mcpParamBinding{ }, []string{ }),
+		makeAPIHandler("GET", "/wait", []mcpParamBinding{}, []string{}),
 	)
 	// Search tool — faster than iterating list endpoints for finding specific items
 	s.AddTool(
@@ -549,6 +549,7 @@ func dbPath() string {
 	home, _ := os.UserHomeDir()
 	return filepath.Join(home, ".local", "share", "skool-pp-cli", "data.db")
 }
+
 // Note: MCP tools use their own dbPath() because they are in a separate package (main, not cli).
 // The CLI's defaultDBPath() in the cli package uses the same canonical path.
 
@@ -688,87 +689,87 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 			"type": "api_key",
 			"env_vars": []map[string]any{
 				{
-					"name": "SKOOL_API_KEY",
-					"kind": "per_call",
-					"required": true,
-					"sensitive": true,
+					"name":        "SKOOL_API_KEY",
+					"kind":        "per_call",
+					"required":    true,
+					"sensitive":   true,
 					"description": "Set to your API credential.",
 				},
 			},
 		},
 		"resources": []map[string]any{
 			{
-				"name": ".deploy_status_henson.json",
+				"name":        ".deploy_status_henson.json",
 				"description": "Operations on .deploy_status_henson.json",
-				"endpoints": []string{"list_.deploy_status_henson.json",  },
+				"endpoints":   []string{"list_.deploy_status_henson.json"},
 			},
 			{
-				"name": "017ae153ccc5",
+				"name":        "017ae153ccc5",
 				"description": "Operations on inputs",
-				"endpoints": []string{"create_mp_verify", "create_telemetry", "list_inputs",  },
-				"syncable": true,
-				"searchable": true,
+				"endpoints":   []string{"create_mp_verify", "create_telemetry", "list_inputs"},
+				"syncable":    true,
+				"searchable":  true,
 			},
 			{
-				"name": "_next",
+				"name":        "_next",
 				"description": "Operations on members.json",
-				"endpoints": []string{"get_about.json", "get_calendar.json", "get_classroom.json", "get_leaderboards.json", "get_map.json", "get_members.json",  },
-				"searchable": true,
+				"endpoints":   []string{"get_about.json", "get_calendar.json", "get_classroom.json", "get_leaderboards.json", "get_map.json", "get_members.json"},
+				"searchable":  true,
 			},
 			{
-				"name": "affiliates",
+				"name":        "affiliates",
 				"description": "Operations on compensations",
-				"endpoints": []string{"list_compensations", "list_payout", "options_compensations",  },
-				"syncable": true,
-				"searchable": true,
+				"endpoints":   []string{"list_compensations", "list_payout", "options_compensations"},
+				"syncable":    true,
+				"searchable":  true,
 			},
 			{
-				"name": "b",
+				"name":        "b",
 				"description": "Operations on b",
-				"endpoints": []string{"create_b",  },
-				"searchable": true,
+				"endpoints":   []string{"create_b"},
+				"searchable":  true,
 			},
 			{
-				"name": "default",
+				"name":        "default",
 				"description": "Operations on default",
-				"endpoints": []string{"create_endpoint",  },
+				"endpoints":   []string{"create_endpoint"},
 			},
 			{
-				"name": "envelope",
+				"name":        "envelope",
 				"description": "Operations on envelope",
-				"endpoints": []string{"create_envelope",  },
+				"endpoints":   []string{"create_envelope"},
 			},
 			{
-				"name": "f",
+				"name":        "f",
 				"description": "Operations on f",
-				"endpoints": []string{"get_f",  },
-				"searchable": true,
+				"endpoints":   []string{"get_f"},
+				"searchable":  true,
 			},
 			{
-				"name": "groups",
+				"name":        "groups",
 				"description": "Operations on analytics-overview-v2",
-				"endpoints": []string{"create_count_pending_invites", "get_admin_metrics", "get_analytics_growth_overview_v2", "get_analytics_overview_v2", "get_billing_payout_data", "get_discovery", "get_member_course_permissions",  },
-				"searchable": true,
+				"endpoints":   []string{"create_count_pending_invites", "get_admin_metrics", "get_analytics_growth_overview_v2", "get_analytics_overview_v2", "get_billing_payout_data", "get_discovery", "get_member_course_permissions"},
+				"searchable":  true,
 			},
 			{
-				"name": "maps",
+				"name":        "maps",
 				"description": "Operations on style.json",
-				"endpoints": []string{"list_sprite.json", "list_style.json",  },
-				"syncable": true,
-				"searchable": true,
+				"endpoints":   []string{"list_sprite.json", "list_style.json"},
+				"syncable":    true,
+				"searchable":  true,
 			},
 			{
-				"name": "tiles",
+				"name":        "tiles",
 				"description": "Operations on tiles.json",
-				"endpoints": []string{"get_1.pbf", "get_2.pbf", "list_tiles.json",  },
-				"syncable": true,
-				"searchable": true,
+				"endpoints":   []string{"get_1.pbf", "get_2.pbf", "list_tiles.json"},
+				"syncable":    true,
+				"searchable":  true,
 			},
 			{
-				"name": "wait",
+				"name":        "wait",
 				"description": "Operations on wait",
-				"endpoints": []string{"list_wait",  },
-				"syncable": true,
+				"endpoints":   []string{"list_wait"},
+				"syncable":    true,
 			},
 		},
 		"query_tips": []string{

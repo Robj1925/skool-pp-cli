@@ -6,16 +6,16 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/spf13/cobra"
 	"net/url"
 	"os"
 	"regexp"
+	"skool-pp-cli/internal/store"
 	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
-	"skool-pp-cli/internal/store"
-	"github.com/spf13/cobra"
 )
 
 // syncResult holds the outcome of syncing a single resource.
@@ -689,8 +689,7 @@ type discriminatorDispatch struct {
 	Values map[string]string
 }
 
-var discriminatorDispatchers = map[string]discriminatorDispatch{
-}
+var discriminatorDispatchers = map[string]discriminatorDispatch{}
 
 func upsertResourceBatch(db *store.Store, resource string, items []json.RawMessage) (int, int, error) {
 	if _, ok := discriminatorDispatchers[resource]; !ok {
@@ -804,12 +803,12 @@ func defaultSyncResources() []string {
 // this preserves the actual endpoint path like "/ISteamApps/GetAppList/v2".
 func syncResourcePath(resource string) (string, error) {
 	paths := map[string]string{
-		"017ae153ccc5": "/017ae153ccc5/4aa4380fa03e/inputs",
-		"affiliates": "/affiliates/v2/compensations",
-		"maps": "/maps/streets-v2/style.json",
+		"017ae153ccc5":                "/017ae153ccc5/4aa4380fa03e/inputs",
+		"affiliates":                  "/affiliates/v2/compensations",
+		"maps":                        "/maps/streets-v2/style.json",
 		"maps-streets-v2-sprite-json": "/maps/streets-v2/sprite.json",
-		"tiles": "/tiles/v3/tiles.json",
-		"wait": "/wait",
+		"tiles":                       "/tiles/v3/tiles.json",
+		"wait":                        "/wait",
 	}
 	if p, ok := paths[resource]; ok {
 		return p, nil
@@ -826,8 +825,7 @@ func syncResourcePath(resource string) (string, error) {
 // Includes both flat resources and dependent (parent-child) resources so
 // annotations on a child path-item are honored at runtime, not just on
 // flat paths.
-var resourceIDFieldOverrides = map[string]string{
-}
+var resourceIDFieldOverrides = map[string]string{}
 
 // genericIDFieldFallbacks is the runtime safety net for resources that did
 // NOT receive a templated IDField. API-specific names belong in spec
@@ -842,8 +840,7 @@ var genericIDFieldFallbacks = []string{"id", "ID", "name", "uuid", "slug", "key"
 // Includes both flat resources and dependent (parent-child) resources so a
 // failed child sync flagged x-critical: true exits non-zero just like a
 // flat-resource critical failure.
-var criticalResources = map[string]bool{
-}
+var criticalResources = map[string]bool{}
 
 // extractID resolves an item's primary-key field. It consults the
 // per-resource templated override first; on miss, it falls through to the

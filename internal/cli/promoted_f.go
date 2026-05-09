@@ -16,10 +16,10 @@ func newFPromotedCmd(flags *rootFlags) *cobra.Command {
 	var flagSignature string
 
 	cmd := &cobra.Command{
-		Use:   "f <hash>",
-		Short: "GET /f/{hash}/{hash}",
-		Long:  "Shortcut for 'f get_f'. GET /f/{hash}/{hash}",
-		Example: "  skool-pp-cli f example-value",
+		Use:         "f <hash>",
+		Short:       "GET /f/{hash}/{hash}",
+		Long:        "Shortcut for 'f get_f'. GET /f/{hash}/{hash}",
+		Example:     "  skool-pp-cli f example-value",
 		Annotations: map[string]string{"pp:endpoint": "f.get_f", "pp:method": "GET", "pp:path": "/f/{hash}/{hash}", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

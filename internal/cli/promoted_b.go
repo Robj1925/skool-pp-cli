@@ -17,10 +17,10 @@ func newBPromotedCmd(flags *rootFlags) *cobra.Command {
 	var bodyNumRequests int
 
 	cmd := &cobra.Command{
-		Use:   "b",
-		Short: "POST /b",
-		Long:  "Shortcut for 'b create_b'. POST /b",
-		Example: "  skool-pp-cli b --client-id 550e8400-e29b-41d4-a716-446655440000",
+		Use:         "b",
+		Short:       "POST /b",
+		Long:        "Shortcut for 'b create_b'. POST /b",
+		Example:     "  skool-pp-cli b --client-id 550e8400-e29b-41d4-a716-446655440000",
 		Annotations: map[string]string{"pp:endpoint": "b.create_b", "pp:method": "POST", "pp:path": "/b"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if !cmd.Flags().Changed("client-id") && !flags.dryRun {

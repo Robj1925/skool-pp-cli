@@ -16,9 +16,9 @@ func newGroupsGetBillingPayoutDataCmd(flags *rootFlags) *cobra.Command {
 	var flagOffset string
 
 	cmd := &cobra.Command{
-		Use:   "get-billing-payout-data <hash>",
-		Short: "GET /groups/{hash}/billing-payout-data",
-		Example: "  skool-pp-cli groups get-billing-payout-data example-value",
+		Use:         "get-billing-payout-data <hash>",
+		Short:       "GET /groups/{hash}/billing-payout-data",
+		Example:     "  skool-pp-cli groups get-billing-payout-data example-value",
 		Annotations: map[string]string{"pp:endpoint": "groups.get_billing_payout_data", "pp:method": "GET", "pp:path": "/groups/{hash}/billing-payout-data", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

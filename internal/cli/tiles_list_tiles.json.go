@@ -15,9 +15,9 @@ func newTilesListTilesJsonCmd(flags *rootFlags) *cobra.Command {
 	var flagMtsid string
 
 	cmd := &cobra.Command{
-		Use:   "list-tiles.json",
-		Short: "GET /tiles/v3/tiles.json",
-		Example: "  skool-pp-cli tiles list-tiles.json",
+		Use:         "list-tiles.json",
+		Short:       "GET /tiles/v3/tiles.json",
+		Example:     "  skool-pp-cli tiles list-tiles.json",
 		Annotations: map[string]string{"pp:endpoint": "tiles.list_tiles.json", "pp:method": "GET", "pp:path": "/tiles/v3/tiles.json", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

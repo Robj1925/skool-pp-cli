@@ -19,9 +19,9 @@ func newAffiliatesListCompensationsCmd(flags *rootFlags) *cobra.Command {
 	var flagType string
 
 	cmd := &cobra.Command{
-		Use:   "list-compensations",
-		Short: "GET /affiliates/v2/compensations",
-		Example: "  skool-pp-cli affiliates list-compensations",
+		Use:         "list-compensations",
+		Short:       "GET /affiliates/v2/compensations",
+		Example:     "  skool-pp-cli affiliates list-compensations",
 		Annotations: map[string]string{"pp:endpoint": "affiliates.list_compensations", "pp:method": "GET", "pp:path": "/affiliates/v2/compensations", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()

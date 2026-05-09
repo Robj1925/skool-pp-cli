@@ -16,9 +16,9 @@ func newNextGetMapJsonCmd(flags *rootFlags) *cobra.Command {
 	var flagIs int
 
 	cmd := &cobra.Command{
-		Use:   "get-map.json <id>",
-		Short: "GET /_next/data/{id}/ai-academy-with-robby-6849/-/map.json",
-		Example: "  skool-pp-cli _next get-map.json 550e8400-e29b-41d4-a716-446655440000",
+		Use:         "get-map.json <id>",
+		Short:       "GET /_next/data/{id}/ai-academy-with-robby-6849/-/map.json",
+		Example:     "  skool-pp-cli _next get-map.json 550e8400-e29b-41d4-a716-446655440000",
 		Annotations: map[string]string{"pp:endpoint": "_next.get_map.json", "pp:method": "GET", "pp:path": "/_next/data/{id}/ai-academy-with-robby-6849/-/map.json", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

@@ -15,9 +15,9 @@ func newTilesGet1PbfCmd(flags *rootFlags) *cobra.Command {
 	var flagMtsid string
 
 	cmd := &cobra.Command{
-		Use:   "get-1.pbf <id>",
-		Short: "GET /tiles/v3/{id}/{id}/1.pbf",
-		Example: "  skool-pp-cli tiles get-1.pbf 550e8400-e29b-41d4-a716-446655440000",
+		Use:         "get-1.pbf <id>",
+		Short:       "GET /tiles/v3/{id}/{id}/1.pbf",
+		Example:     "  skool-pp-cli tiles get-1.pbf 550e8400-e29b-41d4-a716-446655440000",
 		Annotations: map[string]string{"pp:endpoint": "tiles.get_1.pbf", "pp:method": "GET", "pp:path": "/tiles/v3/{id}/{id}/1.pbf", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {

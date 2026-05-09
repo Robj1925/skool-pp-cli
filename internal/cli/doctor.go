@@ -13,10 +13,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/spf13/cobra"
 	"skool-pp-cli/internal/client"
 	"skool-pp-cli/internal/config"
 	"skool-pp-cli/internal/store"
-	"github.com/spf13/cobra"
 )
 
 // looksLikeDoctorInterstitial reports whether the response body matches a known
