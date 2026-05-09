@@ -1,6 +1,10 @@
-# Skool Community CLI (`skool-pp-cli`)
+# Skool Community CLI (`skool-pp-cli`) [[About]](ABOUT.md)
 
 A high-performance command-line interface for Skool community owners and power users. This tool allows you to bypass the browser for community management, perform deep domain analytics, and gain behavioral insights into your members.
+
+<p align="center">
+  <img src="assets/logo.png" alt="Skool Community CLI Logo" width="200">
+</p>
 
 ## 🚀 Key Features
 
