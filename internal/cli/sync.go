@@ -6,10 +6,12 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"github.com/Robj1925/skool-pp-cli/internal/store"
 	"github.com/spf13/cobra"
 	"net/url"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -82,7 +84,12 @@ Exit codes & warnings:
 			c.NoCache = true
 
 			if dbPath == "" {
-				dbPath = defaultDBPath("skool-pp-cli")
+				cfg, err := config.Load(flags.configPath)
+				if err == nil {
+					dbPath = filepath.Join(filepath.Dir(cfg.Path), "skool.db")
+				} else {
+					dbPath = defaultDBPath("skool-pp-cli")
+				}
 			}
 
 			db, err := store.OpenWithContext(cmd.Context(), dbPath)
