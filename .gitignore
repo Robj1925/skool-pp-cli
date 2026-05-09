@@ -1,0 +1,38 @@
+# HAR capture files contain session cookies — NEVER commit
+*.har
+*.har.bak
+
+# Generated spec (contains internal endpoint details)
+skool-spec-generated.yaml
+
+# Local SQLite database (contains member data)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Environment / credentials
+.env
+.env.local
+.env.*.local
+
+# Printing Press run state
+.printing-press/
+
+# Traffic analysis (may contain sensitive request data)
+skool-traffic-analysis.json
+
+# Go build artifacts
+/skool-pp-cli
+/skool-pp-mcp
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

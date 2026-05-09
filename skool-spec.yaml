@@ -1,0 +1,828 @@
+name: skool
+description: Discovered API spec for skool
+version: 0.1.0
+base_url: https://r.stripe.com
+spec_source: sniffed
+auth:
+    type: api_key
+    header: sentry_key
+    format: ""
+    env_vars:
+        - SKOOL_API_KEY
+    env_var_specs:
+        - name: SKOOL_API_KEY
+          kind: per_call
+          required: true
+          sensitive: true
+          inferred: true
+    in: query
+config:
+    format: toml
+    path: ~/.config/skool-pp-cli/config.toml
+resources:
+    .deploy_status_henson.json:
+        description: Operations on .deploy_status_henson.json
+        endpoints:
+            list_.deploy_status_henson.json:
+                method: GET
+                path: /v3/.deploy_status_henson.json
+                description: GET /v3/.deploy_status_henson.json
+                params:
+                    - name: canaryPercentage
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: deployedRevisions
+                      type: array
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: .deploy_status_henson.json
+                pagination: null
+    _next:
+        description: Operations on members.json
+        endpoints:
+            get_about.json:
+                method: GET
+                path: /_next/data/{id}/ai-academy-with-robby-6849/about.json
+                description: GET /_next/data/{id}/ai-academy-with-robby-6849/about.json
+                params:
+                    - name: group
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: about.json
+                pagination: null
+            get_calendar.json:
+                method: GET
+                path: /_next/data/{id}/ai-academy-with-robby-6849/calendar.json
+                description: GET /_next/data/{id}/ai-academy-with-robby-6849/calendar.json
+                params:
+                    - name: group
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: calendar.json
+                pagination: null
+            get_classroom.json:
+                method: GET
+                path: /_next/data/{id}/ai-academy-with-robby-6849/classroom.json
+                description: GET /_next/data/{id}/ai-academy-with-robby-6849/classroom.json
+                params:
+                    - name: group
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: classroom.json
+                pagination: null
+            get_leaderboards.json:
+                method: GET
+                path: /_next/data/{id}/ai-academy-with-robby-6849/-/leaderboards.json
+                description: GET /_next/data/{id}/ai-academy-with-robby-6849/-/leaderboards.json
+                params:
+                    - name: group
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: leaderboards.json
+                pagination: null
+            get_map.json:
+                method: GET
+                path: /_next/data/{id}/ai-academy-with-robby-6849/-/map.json
+                description: GET /_next/data/{id}/ai-academy-with-robby-6849/-/map.json
+                params:
+                    - name: group
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                    - name: is
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: map.json
+                pagination: null
+            get_members.json:
+                method: GET
+                path: /_next/data/{id}/ai-academy-with-robby-6849/-/members.json
+                description: GET /_next/data/{id}/ai-academy-with-robby-6849/-/members.json
+                params:
+                    - name: group
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                    - name: t
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: members.json
+                pagination: null
+    017ae153ccc5:
+        description: Operations on inputs
+        endpoints:
+            create_mp_verify:
+                method: POST
+                path: /017ae153ccc5/4aa4380fa03e/mp_verify
+                description: POST /017ae153ccc5/4aa4380fa03e/mp_verify
+                params:
+                    - name: token
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: mp_verify
+                pagination: null
+            create_telemetry:
+                method: POST
+                path: /017ae153ccc5/4aa4380fa03e/telemetry
+                description: POST /017ae153ccc5/4aa4380fa03e/telemetry
+                params:
+                    - name: awswaf_session_storage
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: next_interval
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: token
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: telemetry
+                pagination: null
+            list_inputs:
+                method: GET
+                path: /017ae153ccc5/4aa4380fa03e/inputs
+                description: GET /017ae153ccc5/4aa4380fa03e/inputs
+                params:
+                    - name: client
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: inputs
+                pagination: null
+    affiliates:
+        description: Operations on compensations
+        endpoints:
+            list_compensations:
+                method: GET
+                path: /affiliates/v2/compensations
+                description: GET /affiliates/v2/compensations
+                params:
+                    - name: cancelled
+                      type: boolean
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: group_id
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: limit
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: offset
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: type
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: compensations
+                pagination: null
+            list_payout:
+                method: GET
+                path: /affiliates/payout
+                description: GET /affiliates/payout
+                params:
+                    - name: code
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: currency
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: last_30_days
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: lifetime
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: payable
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: pending
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: setup_status
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: payout
+                pagination: null
+            options_compensations:
+                method: OPTIONS
+                path: /affiliates/v2/compensations
+                description: OPTIONS /affiliates/v2/compensations
+                params:
+                    - name: cancelled
+                      type: boolean
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: group_id
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: limit
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: offset
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: type
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: compensations
+                pagination: null
+    b:
+        description: Operations on b
+        endpoints:
+            create_b:
+                method: POST
+                path: /b
+                description: POST /b
+                params: []
+                body:
+                    - name: client_id
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: events
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: num_requests
+                      type: integer
+                      required: true
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                response:
+                    type: object
+                    item: b
+                pagination: null
+    default:
+        description: Operations on default
+        endpoints:
+            create_endpoint:
+                method: POST
+                path: /{id}
+                description: POST /{id}
+                params:
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: response
+                pagination: null
+    envelope:
+        description: Operations on envelope
+        endpoints:
+            create_envelope:
+                method: POST
+                path: /api/{id}/envelope/
+                description: POST /api/{id}/envelope/
+                params:
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                    - name: sentry_client
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: sentry_version
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: envelope
+                pagination: null
+    f:
+        description: Operations on f
+        endpoints:
+            get_f:
+                method: GET
+                path: /f/{hash}/{hash}
+                description: GET /f/{hash}/{hash}
+                params:
+                    - name: Expires
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: Signature
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                body: []
+                response:
+                    type: array
+                    item: f
+                pagination: null
+    groups:
+        description: Operations on analytics-overview-v2
+        endpoints:
+            create_count_pending_invites:
+                method: POST
+                path: /groups/{hash}/count-pending-invites
+                description: POST /groups/{hash}/count-pending-invites
+                params:
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: count_pending_invites
+                pagination: null
+            get_admin_metrics:
+                method: GET
+                path: /groups/{hash}/admin-metrics
+                description: GET /groups/{hash}/admin-metrics
+                params:
+                    - name: amt
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                    - name: range
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: admin_metrics
+                pagination: null
+            get_analytics_growth_overview_v2:
+                method: GET
+                path: /groups/{hash}/analytics-growth-overview-v2
+                description: GET /groups/{hash}/analytics-growth-overview-v2
+                params:
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: analytics_growth_overview_v2
+                pagination: null
+            get_analytics_overview_v2:
+                method: GET
+                path: /groups/{hash}/analytics-overview-v2
+                description: GET /groups/{hash}/analytics-overview-v2
+                params:
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: analytics_overview_v2
+                pagination: null
+            get_billing_payout_data:
+                method: GET
+                path: /groups/{hash}/billing-payout-data
+                description: GET /groups/{hash}/billing-payout-data
+                params:
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                    - name: limit
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: offset
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: billing_payout_data
+                pagination: null
+            get_discovery:
+                method: GET
+                path: /groups/{hash}/discovery
+                description: GET /groups/{hash}/discovery
+                params:
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: discovery
+                pagination: null
+            get_member_course_permissions:
+                method: GET
+                path: /groups/{hash}/member-course-permissions
+                description: GET /groups/{hash}/member-course-permissions
+                params:
+                    - name: hash
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The hash path segment
+                      fields: []
+                    - name: member
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: member_course_permissions
+                pagination: null
+    maps:
+        description: Operations on style.json
+        endpoints:
+            list_sprite.json:
+                method: GET
+                path: /maps/streets-v2/sprite.json
+                description: GET /maps/streets-v2/sprite.json
+                params:
+                    - name: mtsid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: sprite.json
+                pagination: null
+            list_style.json:
+                method: GET
+                path: /maps/streets-v2/style.json
+                description: GET /maps/streets-v2/style.json
+                params:
+                    - name: mtsid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: style.json
+                pagination: null
+    tiles:
+        description: Operations on tiles.json
+        endpoints:
+            get_1.pbf:
+                method: GET
+                path: /tiles/v3/{id}/{id}/1.pbf
+                description: GET /tiles/v3/{id}/{id}/1.pbf
+                params:
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                    - name: mtsid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: 1.pbf
+                pagination: null
+            get_2.pbf:
+                method: GET
+                path: /tiles/v3/{id}/{id}/2.pbf
+                description: GET /tiles/v3/{id}/{id}/2.pbf
+                params:
+                    - name: id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The id path segment
+                      fields: []
+                    - name: mtsid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: 2.pbf
+                pagination: null
+            list_tiles.json:
+                method: GET
+                path: /tiles/v3/tiles.json
+                description: GET /tiles/v3/tiles.json
+                params:
+                    - name: mtsid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: tiles.json
+                pagination: null
+    wait:
+        description: Operations on wait
+        endpoints:
+            list_wait:
+                method: GET
+                path: /wait
+                description: GET /wait
+                params: []
+                body: []
+                response:
+                    type: object
+                    item: wait
+                pagination: null
+types: {}
