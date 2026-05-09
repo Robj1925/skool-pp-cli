@@ -267,6 +267,11 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 			Body:       truncateBody(respBody),
 		}
 
+		// Tier-Aware Error Handling (Graceful Degradation)
+		if resp.StatusCode == 403 && (strings.Contains(path, "affiliate") || strings.Contains(path, "billing")) {
+			apiErr.Body = "Feature requires Skool Pro tier (Affiliate/Billing features are disabled on Hobby tier). Original error: " + apiErr.Body
+		}
+
 		// Rate limited - adjust adaptive limiter and retry
 		if resp.StatusCode == 429 && attempt < maxRetries {
 			c.limiter.OnRateLimit()
