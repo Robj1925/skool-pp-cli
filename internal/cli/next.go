@@ -10,7 +10,11 @@ import (
 func newNextCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "next",
-		Short: "Operations on members.json",
+		Short: "Core community data (members, classroom, calendar)",
+		Long: `Access core community data endpoints used by the Skool frontend. 
+This includes member lists, classroom content, calendar events, and leaderboards.`,
+		Example: `  skool-pp-cli next get_members.json --id <group-id>
+  skool-pp-cli next get_classroom.json --id <group-id>`,
 	}
 
 	cmd.AddCommand(newNextGetAboutJsonCmd(flags))

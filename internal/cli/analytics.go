@@ -16,6 +16,14 @@ func newAnalyticsDomainCmd(flags *rootFlags) *cobra.Command {
 		Use:     "analytics-domain",
 		Aliases: []string{"domain-analytics"},
 		Short:   "Domain analytics commands (Rung 4)",
+		Long: `Domain Analytics (Rung 4) provides advanced reporting on community 
+health and member engagement. These commands operate on locally synced data 
+to identify patterns and segment members.
+
+Requires running 'skool-pp-cli sync' first.`,
+		Example: `  skool-pp-cli analytics-domain orphans
+  skool-pp-cli analytics-domain stale --days 60
+  skool-pp-cli analytics-domain top-contributors`,
 	}
 
 	cmd.AddCommand(newStaleCmd(flags))

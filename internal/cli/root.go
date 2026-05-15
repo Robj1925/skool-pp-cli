@@ -82,11 +82,28 @@ func Execute() error {
 func newRootCmd(flags *rootFlags) *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use:   "skool-pp-cli",
-		Short: "Manage skool resources via the skool API",
-		Long: `Manage skool resources via the skool API.
+		Short: "High-performance CLI for Skool community management and analytics",
+		Long: `Skool Community CLI (skool-pp-cli)
 
-Add --agent to any command for JSON output + non-interactive mode.
-Run 'skool-pp-cli doctor' to verify auth and connectivity.`,
+A powerful command-line interface for Skool community owners and power users. 
+It provides deep domain analytics, behavioral insights, and automated management 
+capabilities that go beyond the standard browser interface.
+
+Key Capabilities:
+  - Full Data Sync: Download your community data to a local SQLite database for offline analysis.
+  - Domain Analytics (Rung 4): Identify orphaned members, stale activity, and top contributors.
+  - Behavioral Insights (Rung 5): Predict churn risk and track member growth velocity.
+  - Chat & Messaging: Send and receive direct messages from the terminal.
+  - Content Management: Create posts and manage community content programmatically.
+  - Search: Instant full-text search across your entire community data.
+
+Common Workflows:
+  1. Authenticate:   skool-pp-cli auth set-token "YOUR_COOKIE_STRING"
+  2. Verify:         skool-pp-cli doctor
+  3. Sync Data:      skool-pp-cli sync
+  4. Run Analytics:  skool-pp-cli analytics-domain orphans
+
+Add --agent to any command for JSON output + non-interactive mode.`,
 		SilenceUsage: true,
 		Version:      version,
 	}

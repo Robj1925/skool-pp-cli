@@ -10,7 +10,11 @@ import (
 func newGroupsCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "groups",
-		Short: "Operations on analytics-overview-v2",
+		Short: "Community analytics and group management",
+		Long: `Manage your Skool groups and access deep analytics for each group. 
+This includes admin metrics, growth overviews, and billing data.`,
+		Example: `  skool-pp-cli groups get_admin_metrics --hash <group-hash>
+  skool-pp-cli groups get_analytics_overview_v2 --hash <group-hash>`,
 	}
 
 	cmd.AddCommand(newGroupsCreateCountPendingInvitesCmd(flags))

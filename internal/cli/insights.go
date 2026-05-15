@@ -14,6 +14,14 @@ func newInsightsCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "insights",
 		Short: "Behavioral prediction commands (Rung 5)",
+		Long: `Behavioral Insights (Rung 5) uses the synced community data to predict 
+future member behavior and community health. These models help community 
+owners proactively manage retention and growth.
+
+Requires running 'skool-pp-cli sync' first.`,
+		Example: `  skool-pp-cli insights churn-risk
+  skool-pp-cli insights level-velocity
+  skool-pp-cli insights engagement-health`,
 	}
 
 	cmd.AddCommand(newChurnRiskCmd(flags))

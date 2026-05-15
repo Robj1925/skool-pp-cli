@@ -10,7 +10,9 @@ import (
 func newV017ae153ccc5Cmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "017ae153ccc5",
-		Short: "Operations on inputs",
+		Short: "Telemetry and verification inputs",
+		Long: `Access internal telemetry and verification endpoints. These are 
+typically used for system monitoring and automated health checks.`,
 	}
 
 	cmd.AddCommand(newV017ae153ccc5CreateMpVerifyCmd(flags))

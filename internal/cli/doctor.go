@@ -68,9 +68,13 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "doctor",
 		Short: "Check CLI health",
+		Long: `The doctor command performs a comprehensive health check of the CLI 
+environment. It verifies configuration, authentication, API connectivity, 
+and local database health. Use this command to troubleshoot issues or 
+ensure your environment is correctly set up.`,
 		Example: `  skool-pp-cli doctor
   skool-pp-cli doctor --json
-  skool-pp-cli doctor --fail-on warn`,
+  skool-pp-cli doctor --fail-on error`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			report := map[string]any{}
 

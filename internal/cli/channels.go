@@ -9,7 +9,10 @@ import (
 func newChannelsCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "channels",
-		Short: "Operations on chat channels",
+		Short: "Direct messaging and chat channels",
+		Long:  `List chat conversations and send direct messages to community members.`,
+		Example: `  skool-pp-cli channels list
+  skool-pp-cli channels send <channel-id> --content "Hello"`,
 	}
 
 	cmd.AddCommand(newChannelsCreateMessageCmd(flags))

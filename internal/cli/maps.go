@@ -10,7 +10,8 @@ import (
 func newMapsCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "maps",
-		Short: "Operations on style.json",
+		Short: "Map styles and assets",
+		Long:  `Access map styles, sprites, and other assets used for community map features.`,
 	}
 
 	cmd.AddCommand(newMapsListSpriteJsonCmd(flags))

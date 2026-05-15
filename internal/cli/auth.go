@@ -5,6 +5,7 @@ package cli
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -19,6 +20,12 @@ func newAuthCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "auth",
 		Short: "Manage authentication for Skool",
+		Long: `The auth command provides tools for managing your Skool session. 
+Because Skool does not have a public API, the CLI uses your browser's 
+session cookie to authenticate requests.`,
+		Example: `  skool-pp-cli auth set-token "YOUR_COOKIE_STRING"
+  skool-pp-cli auth status
+  skool-pp-cli auth logout`,
 	}
 
 	cmd.AddCommand(newAuthStatusCmd(flags))
@@ -26,6 +33,7 @@ func newAuthCmd(flags *rootFlags) *cobra.Command {
 	cmd.AddCommand(newAuthLogoutCmd(flags))
 	cmd.AddCommand(newAuthRefreshCmd(flags))
 	cmd.AddCommand(newAuthLoginCmd(flags))
+	cmd.AddCommand(newAuthImportHarCmd(flags))
 
 	return cmd
 }
@@ -239,6 +247,81 @@ func newAuthLogoutCmd(flags *rootFlags) *cobra.Command {
 				return nil
 			}
 			fmt.Fprintln(cmd.OutOrStdout(), "Logged out. Credentials cleared.")
+			return nil
+		},
+	}
+}
+
+func newAuthImportHarCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "import-har <path>",
+		Short: "Extract session cookies from a browser HAR export",
+		Long: `Extracts the 'cookie' header from a .har file exported from your browser's 
+Network tab. This is a reliable alternative to automated login when 
+browser automation is blocked or unstable.
+
+How to get a HAR file:
+1. Open skool.com in your browser and log in.
+2. Open Developer Tools (F12) -> Network tab.
+3. Refresh the page or click a community.
+4. Right-click any request and select 'Save all as HAR with content'.
+5. Run: skool-pp-cli auth import-har path/to/export.har`,
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			path := args[0]
+			data, err := os.ReadFile(path)
+			if err != nil {
+				return fmt.Errorf("reading HAR file: %w", err)
+			}
+
+			// Simple HAR structure traversal
+			var har struct {
+				Log struct {
+					Entries []struct {
+						Request struct {
+							Headers []struct {
+								Name  string `json:"name"`
+								Value string `json:"value"`
+							} `json:"headers"`
+						} `json:"request"`
+					} `json:"entries"`
+				} `json:"log"`
+			}
+
+			if err := json.Unmarshal(data, &har); err != nil {
+				return fmt.Errorf("parsing HAR JSON: %w", err)
+			}
+
+			var bestCookie string
+			for _, entry := range har.Log.Entries {
+				for _, header := range entry.Request.Headers {
+					if strings.ToLower(header.Name) == "cookie" {
+						// Look for cookies containing auth material
+						if strings.Contains(header.Value, "auth_token") {
+							bestCookie = header.Value
+							break
+						}
+					}
+				}
+				if bestCookie != "" {
+					break
+				}
+			}
+
+			if bestCookie == "" {
+				return fmt.Errorf("no session cookies found in HAR file. Ensure the HAR includes an authenticated request to skool.com")
+			}
+
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			cfg.AuthHeaderVal = ""
+			if err := cfg.SaveCredential(bestCookie); err != nil {
+				return err
+			}
+
+			fmt.Printf("Success! Imported session cookies from %s\n", path)
 			return nil
 		},
 	}

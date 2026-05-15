@@ -42,17 +42,17 @@ This CLI uses standard HTTP transport with HTTP/2 disabled for browser-facing en
 
 ## Command Reference
 
-**.deploy_status_henson.json** — Operations on .deploy_status_henson.json
+**.deploy_status_henson.json** — Deployment status tracking
 
 - `skool-pp-cli .deploy_status_henson.json` — GET /v3/.deploy_status_henson.json
 
-**017ae153ccc5** — Operations on inputs
+**017ae153ccc5** — Telemetry and verification inputs
 
 - `skool-pp-cli 017ae153ccc5 create_mp_verify` — POST /017ae153ccc5/4aa4380fa03e/mp_verify
 - `skool-pp-cli 017ae153ccc5 create_telemetry` — POST /017ae153ccc5/4aa4380fa03e/telemetry
 - `skool-pp-cli 017ae153ccc5 list_inputs` — GET /017ae153ccc5/4aa4380fa03e/inputs
 
-**_next** — Operations on members.json
+**_next** — Core community data (members, classroom, calendar)
 
 - `skool-pp-cli _next get_about.json` — GET /_next/data/{id}/ai-academy-with-robby-6849/about.json
 - `skool-pp-cli _next get_calendar.json` — GET /_next/data/{id}/ai-academy-with-robby-6849/calendar.json
@@ -61,29 +61,31 @@ This CLI uses standard HTTP transport with HTTP/2 disabled for browser-facing en
 - `skool-pp-cli _next get_map.json` — GET /_next/data/{id}/ai-academy-with-robby-6849/-/map.json
 - `skool-pp-cli _next get_members.json` — GET /_next/data/{id}/ai-academy-with-robby-6849/-/members.json
 
-**affiliates** — Operations on compensations
+**affiliates** — Affiliate program and payouts
 
 - `skool-pp-cli affiliates list_compensations` — GET /affiliates/v2/compensations
 - `skool-pp-cli affiliates list_payout` — GET /affiliates/payout
 - `skool-pp-cli affiliates options_compensations` — OPTIONS /affiliates/v2/compensations
 
-**b** — Operations on b
+**analytics-domain** — Domain analytics (Rung 4)
 
-- `skool-pp-cli b` — POST /b
+- `skool-pp-cli analytics-domain orphans` — Members who joined but never posted
+- `skool-pp-cli analytics-domain stale` — Members with no recent activity
+- `skool-pp-cli analytics-domain top-contributors` — Most active members
 
-**default** — Operations on default
+**auth** — Manage authentication for Skool
 
-- `skool-pp-cli default <id>` — POST /{id}
+- `skool-pp-cli auth login` — Automated login
+- `skool-pp-cli auth import-har` — Extract cookies from HAR file
+- `skool-pp-cli auth set-token` — Save session cookie
+- `skool-pp-cli auth status` — Check auth health
 
-**envelope** — Operations on envelope
+**channels** — Direct messaging and chat channels
 
-- `skool-pp-cli envelope <id>` — POST /api/{id}/envelope/
+- `skool-pp-cli channels list` — List conversations
+- `skool-pp-cli channels send` — Send a message
 
-**f** — Operations on f
-
-- `skool-pp-cli f <hash>` — GET /f/{hash}/{hash}
-
-**groups** — Operations on analytics-overview-v2
+**groups** — Community analytics and group management
 
 - `skool-pp-cli groups create_count_pending_invites` — POST /groups/{hash}/count-pending-invites
 - `skool-pp-cli groups get_admin_metrics` — GET /groups/{hash}/admin-metrics
@@ -93,12 +95,26 @@ This CLI uses standard HTTP transport with HTTP/2 disabled for browser-facing en
 - `skool-pp-cli groups get_discovery` — GET /groups/{hash}/discovery
 - `skool-pp-cli groups get_member_course_permissions` — GET /groups/{hash}/member-course-permissions
 
-**maps** — Operations on style.json
+**insights** — Behavioral prediction (Rung 5)
+
+- `skool-pp-cli insights churn-risk` — Predict member churn
+- `skool-pp-cli insights level-velocity` — Track growth speed
+- `skool-pp-cli insights engagement-health` — Global community health score
+
+**maps** — Map styles and assets
 
 - `skool-pp-cli maps list_sprite.json` — GET /maps/streets-v2/sprite.json
 - `skool-pp-cli maps list_style.json` — GET /maps/streets-v2/style.json
 
-**tiles** — Operations on tiles.json
+**posts** — Manage community posts
+
+- `skool-pp-cli posts create` — Create a new post
+
+**sync** — Data synchronization
+
+- `skool-pp-cli sync` — Sync API data to local SQLite
+
+**tiles** — Map tiles and vector data
 
 - `skool-pp-cli tiles get_1.pbf` — GET /tiles/v3/{id}/{id}/1.pbf
 - `skool-pp-cli tiles get_2.pbf` — GET /tiles/v3/{id}/{id}/2.pbf

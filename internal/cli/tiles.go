@@ -10,7 +10,8 @@ import (
 func newTilesCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "tiles",
-		Short: "Operations on tiles.json",
+		Short: "Map tiles and vector data",
+		Long:  `Access vector map tiles and tile metadata for geographic community features.`,
 	}
 
 	cmd.AddCommand(newTilesGet1PbfCmd(flags))

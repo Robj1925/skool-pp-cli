@@ -10,7 +10,10 @@ import (
 func newAffiliatesCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "affiliates",
-		Short: "Operations on compensations",
+		Short: "Affiliate program and payouts",
+		Long:  `Manage your Skool affiliate program, view compensations, and track payouts.`,
+		Example: `  skool-pp-cli affiliates list_compensations
+  skool-pp-cli affiliates list_payout`,
 	}
 
 	cmd.AddCommand(newAffiliatesListCompensationsCmd(flags))

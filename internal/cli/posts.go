@@ -9,7 +9,9 @@ import (
 func newPostsCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "posts",
-		Short: "Operations on posts",
+		Short: "Manage community posts",
+		Long:  `Create and manage posts in your Skool communities.`,
+		Example: `  skool-pp-cli posts create <group-id> --title "My Post" --content "Body"`,
 	}
 
 	cmd.AddCommand(newPostsCreateCmd(flags))
