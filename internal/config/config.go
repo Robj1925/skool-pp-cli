@@ -29,7 +29,7 @@ type Config struct {
 
 func Load(configPath string) (*Config, error) {
 	cfg := &Config{
-		BaseURL: "https://www.skool.com",
+		BaseURL: "https://api2.skool.com",
 	}
 
 	// Resolve config path
