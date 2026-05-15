@@ -1275,3 +1275,18 @@ func defaultDBPath(name string) string {
 	home, _ := os.UserHomeDir()
 	return filepath.Join(home, ".local", "share", name, "data.db")
 }
+
+func skoolHeaders() map[string]string {
+	return map[string]string{
+		"Host":              "api2.skool.com",
+		"Origin":            "https://www.skool.com",
+		"Referer":           "https://www.skool.com/",
+		"User-Agent":        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+		"Accept":            "*/*",
+		"Accept-Language":   "en-US,en;q=0.9",
+		"Sec-Fetch-Dest":    "empty",
+		"Sec-Fetch-Mode":    "cors",
+		"Sec-Fetch-Site":    "same-site",
+		"Content-Type":      "application/json",
+	}
+}

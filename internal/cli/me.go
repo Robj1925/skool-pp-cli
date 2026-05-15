@@ -30,13 +30,15 @@ func newMeGroupsCmd(flags *rootFlags) *cobra.Command {
 				return err
 			}
 
-			// We use the chat-channels endpoint which contains group info for each channel
 			path := "/self/chat-channels"
 			params := map[string]string{
-				"limit": "100",
+				"offset":      "0",
+				"limit":       "30",
+				"last":        "true",
+				"unread-only": "false",
 			}
 
-			data, err := c.Get(path, params)
+			data, err := c.GetWithHeaders(path, params, skoolHeaders())
 			if err != nil {
 				return classifyAPIError(err, flags)
 			}
@@ -100,7 +102,7 @@ func newMeInfoCmd(flags *rootFlags) *cobra.Command {
 			}
 
 			path := "/self"
-			data, err := c.Get(path, nil)
+			data, err := c.GetWithHeaders(path, nil, skoolHeaders())
 			if err != nil {
 				return classifyAPIError(err, flags)
 			}

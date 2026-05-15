@@ -26,7 +26,7 @@ func newPostsListCategoriesCmd(flags *rootFlags) *cobra.Command {
 
 			// We use the discovery endpoint which contains category info
 			path := fmt.Sprintf("/groups/%s/discovery", groupHash)
-			data, err := c.Get(path, nil)
+			data, err := c.GetWithHeaders(path, nil, skoolHeaders())
 			if err != nil {
 				return classifyAPIError(err, flags)
 			}

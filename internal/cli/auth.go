@@ -316,7 +316,19 @@ How to get a HAR file:
 			}
 
 			var bestCookie string
-			var domainsFound []string
+			bestHeaders := make(map[string]string)
+			
+			// Pass 1: Aggregate all bot-detection headers found anywhere in the HAR
+			for _, entry := range har.Log.Entries {
+				for _, header := range entry.Request.Headers {
+					name := strings.ToLower(header.Name)
+					if strings.HasPrefix(name, "x-browser-") || name == "x-client-data" {
+						bestHeaders[header.Name] = header.Value
+					}
+				}
+			}
+
+			// Pass 2: Find the best session cookie
 			for _, entry := range har.Log.Entries {
 				u, err := url.Parse(entry.Request.URL)
 				if err != nil {
@@ -326,22 +338,23 @@ How to get a HAR file:
 				isSkool := strings.Contains(u.Host, "skool.com")
 				if isSkool {
 					for _, header := range entry.Request.Headers {
-						if strings.ToLower(header.Name) == "cookie" {
-							// Look for cookies containing auth material
-							if strings.Contains(header.Value, "auth_token") || strings.Contains(header.Value, "aws-waf-token") {
+						name := strings.ToLower(header.Name)
+						if name == "cookie" {
+							// If we find p_v, we take it and stop (it's the gold standard)
+							if strings.Contains(header.Value, "p_v=") {
 								bestCookie = header.Value
-								break
+								goto found
+							}
+							// Otherwise, if we find auth_token, keep it as a candidate
+							if bestCookie == "" && strings.Contains(header.Value, "auth_token") {
+								bestCookie = header.Value
 							}
 						}
 					}
-				} else {
-					domainsFound = append(domainsFound, u.Host)
-				}
-				
-				if bestCookie != "" {
-					break
 				}
 			}
+		found:
+
 
 			if bestCookie == "" {
 				msg := "no session cookies found in HAR file.\n"
@@ -358,8 +371,7 @@ How to get a HAR file:
 			if err != nil {
 				return err
 			}
-			cfg.AuthHeaderVal = ""
-			if err := cfg.SaveCredential(bestCookie); err != nil {
+			if err := cfg.SaveFullAuth(bestCookie, bestHeaders); err != nil {
 				return err
 			}
 

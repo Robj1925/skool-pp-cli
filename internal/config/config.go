@@ -130,6 +130,14 @@ func (c *Config) SaveCredential(token string) error {
 	return c.save()
 }
 
+func (c *Config) SaveFullAuth(token string, headers map[string]string) error {
+	c.AuthHeaderVal = ""
+	c.AccessToken = ""
+	c.SkoolApiKey = token
+	c.Headers = headers
+	return c.save()
+}
+
 func (c *Config) ClearTokens() error {
 	c.AccessToken = ""
 	c.RefreshToken = ""
