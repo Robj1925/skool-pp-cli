@@ -41,18 +41,11 @@ Ensure you have [Go](https://go.dev/dl/) installed (v1.21+).
 
 ## 🔑 Setup & Authentication
 
-Skool uses a session-based cookie for authentication. You will need to "sniff" your session cookie from your browser.
+Skool uses session-based authentication. The CLI provides a "One-Click" automated login flow to capture your credentials securely.
 
-### 1. Capture your Session Cookie
-1. Log in to [Skool.com](https://www.skool.com) in your browser (Chrome/Edge/Brave).
-2. Right-click anywhere and select **Inspect**.
-3. Go to the **Application** tab (or **Storage** in Firefox).
-4. In the left sidebar, expand **Cookies** and select `https://www.skool.com`.
-5. Find the row where the Name is **NOT** `auth_token` but rather the entire string containing your session info. 
-   > **Tip:** You can also just go to the **Network** tab, refresh the page, click on any request to `www.skool.com`, and copy the entire value of the `Cookie` header from the **Request Headers** section.
+### 1. Automated Login
+Type the following command to initialize your session:
 
-### 2. Automated Session Refresh (Recommended)
-If you have Node.js installed, the CLI can automatically refresh your session by opening a browser window:
 ```bash
 # First time setup (installs browser)
 npm install && npx playwright install chromium
@@ -60,11 +53,12 @@ npm install && npx playwright install chromium
 # Launch automated login
 skool-pp-cli auth login
 ```
-This will open a dedicated **"SkoolBot"** browser profile. Once you log in, the CLI will capture your tokens and close the window automatically. 
+
+This will open a dedicated **"SkoolBot"** browser profile. Once you log in to Skool in that window, the CLI will automatically capture your session tokens and close the window.
 
 > **Pro Tip:** Using a dedicated profile means you can keep your personal Chrome windows open while the CLI runs its automation in the background!
 
-### 3. Verify Connection
+### 2. Verify Connection
 Run the "doctor" command to ensure everything is working:
 ```bash
 skool-pp-cli doctor
@@ -161,7 +155,7 @@ This usually means you haven't run `skool-pp-cli sync` yet, or the sync failed. 
 If you are getting blocked, ensure you are using the latest version of the CLI. We've implemented HTTP/2 support to align with Skool's production environment.
 
 **"Missing config file"**
-The CLI expects a config file at `~/.config/skool-pp-cli/config.toml`. Running `auth set-token` will create this for you automatically.
+The CLI expects a config file at `~/.config/skool-pp-cli/config.toml`. Running `skool-pp-cli auth login` will create this for you automatically.
 
 ---
 
