@@ -17,13 +17,15 @@ const path = require('path');
   }
 
   // CHECK IMMEDIATELY: Are we already logged in?
-  const initialCookies = await browser.cookies();
+  const initialCookies = await browser.cookies("https://www.skool.com");
   if (initialCookies.some(c => c.name === 'auth_token')) {
     console.log("Existing session found in profile! Capturing...");
     const cookieString = initialCookies.map(c => `${c.name}=${c.value}`).join('; ');
-    console.log(`COOKIE_RESULT=${cookieString}`);
-    await browser.close();
-    process.exit(0);
+    process.stdout.write(`COOKIE_RESULT=${cookieString}\n`, async () => {
+      await browser.close();
+      process.exit(0);
+    });
+    return;
   }
 
   console.log("No existing session found. Navigating to Skool...");
@@ -31,13 +33,14 @@ const path = require('path');
 
   const checkInterval = setInterval(async () => {
     try {
-      const cookies = await browser.cookies();
+      const cookies = await browser.cookies("https://www.skool.com");
       if (cookies.some(c => c.name === 'auth_token')) {
         const cookieString = cookies.map(c => `${c.name}=${c.value}`).join('; ');
-        console.log(`COOKIE_RESULT=${cookieString}`);
         clearInterval(checkInterval);
-        await browser.close();
-        process.exit(0);
+        process.stdout.write(`COOKIE_RESULT=${cookieString}\n`, async () => {
+          await browser.close();
+          process.exit(0);
+        });
       }
     } catch (err) {
       // Ignore execution context errors during navigation
