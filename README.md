@@ -52,10 +52,11 @@ If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "in
    ```bash
    git clone https://github.com/Robj1925/skool-pp-cli.git && cd skool-pp-cli && npm install && npx playwright install chromium && go build -o skool-pp-cli ./cmd/skool-pp-cli
    ```
-3. **Handle Authentication (CRITICAL):** The command `./skool-pp-cli auth login` opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens. 
-   - **WARNING:** Do NOT run `node scripts/refresh_auth.js` directly. The Node script only extracts the token; the Go binary (`./skool-pp-cli auth login`) is required to actually save it to the config file.
-   - If running the command in the background, use `command_status` and wait patiently (up to 120 seconds) for the human to finish. Do NOT attempt to run other commands in the meantime.
-4. **Verify:** Once the process finishes, run `./skool-pp-cli doctor --agent` to verify connectivity.
+3. **Handle Authentication (CRITICAL):** The automated browser login (`skool-pp-cli auth login`) can be unstable. **Always instruct the human user to authenticate manually:**
+   - Ask the human to open their browser, log in to Skool, and open Developer Tools (Network tab).
+   - Tell them to find a request (like `members.json`) and copy the entire value of the `cookie:` header.
+   - Instruct the human to provide you with the cookie string, or tell them to run `./skool-pp-cli auth set-token "YOUR_COOKIE_STRING"` themselves.
+4. **Verify:** Once the session token is saved, run `./skool-pp-cli doctor --agent` to verify connectivity.
 
 ---
 
@@ -63,20 +64,20 @@ If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "in
 
 Skool uses session-based authentication. The CLI provides a "One-Click" automated login flow to capture your credentials securely.
 
-### 1. Automated Login
-Type the following command to initialize your session:
+### 1. Manual Login (Recommended)
+Type the following command to get step-by-step instructions for extracting your session cookie:
 
 ```bash
-# First time setup (installs browser)
-npm install && npx playwright install chromium
-
-# Launch automated login
-skool-pp-cli auth login
+skool-pp-cli auth refresh
 ```
 
-This will open a dedicated **"SkoolBot"** browser profile. Once you log in to Skool in that window, the CLI will automatically capture your session tokens and close the window.
+This will guide you on how to find your `cookie:` string from your browser's Developer Tools. Once you have copied the cookie string, save it to the CLI config by running:
 
-> **Pro Tip:** Using a dedicated profile means you can keep your personal Chrome windows open while the CLI runs its automation in the background!
+```bash
+skool-pp-cli auth set-token "YOUR_COOKIE_STRING"
+```
+
+*(Note: The automated `skool-pp-cli auth login` command is still available but relies on Playwright and can be unstable on some environments. The manual method is guaranteed to work 100% of the time.)*
 
 ### 2. Verify Connection
 Run the "doctor" command to ensure everything is working:

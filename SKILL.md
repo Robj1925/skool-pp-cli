@@ -120,15 +120,12 @@ skool-pp-cli which "<capability in your own words>"
 `which` resolves a natural-language capability query to the best matching command from this CLI's curated feature index. Exit code `0` means at least one match; exit code `2` means no confident match — fall back to `--help` or use a narrower query.
 
 ## Auth Setup
-Skool uses session-based authentication. The CLI provides an automated login flow.
+Skool uses session-based authentication.
 
-1. Run the login command:
-   ```bash
-   skool-pp-cli auth login
-   ```
-   **CRITICAL FOR AGENTS:** This command opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens.
-   - **WARNING:** Do NOT run `node scripts/refresh_auth.js` directly. The Node script only extracts the token; the Go binary (`./skool-pp-cli auth login`) is required to actually save it to the config file.
-   - If running the command in the background, use `command_status` and wait patiently (up to 120 seconds) for the human to finish. Do NOT attempt to run other commands in the meantime.
+1. **Instruct the human user to authenticate manually:**
+   - Ask the human to open their browser, log in to Skool, and open Developer Tools (Network tab).
+   - Tell them to find a request (like `members.json`) and copy the entire value of the `cookie:` header.
+   - Instruct the human to provide you with the cookie string, or tell them to run `skool-pp-cli auth set-token "YOUR_COOKIE_STRING"` themselves.
 2. Run `skool-pp-cli doctor --agent` to verify setup.
 
 ## Agent Mode
