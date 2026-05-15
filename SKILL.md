@@ -148,6 +148,17 @@ Skool uses session-based authentication. The most reliable way to authenticate i
      - Ask the human to copy the `cookie:` header from a Skool API request and run: `skool-pp-cli auth set-token "YOUR_COOKIE_STRING"`
 2. Run `skool-pp-cli doctor --agent` to verify connectivity.
 
+## Content Creation Workflow
+
+To create a post in a community, follow these steps:
+
+1. **Identify the Community**: Run `skool-pp-cli me groups` to see a list of communities you are in. Find the target name and copy its `hash` (ID).
+2. **Find the Category**: Run `skool-pp-cli posts list-categories --group <hash>` using the hash from step 1. Choose a category and copy its `id`.
+3. **Create the Post**: Use the hash and category ID to create the post:
+   ```bash
+   skool-pp-cli posts create <group-hash> --category <category-id> --title "My Title" --content "Post Body"
+   ```
+
 ## Agent Mode
 
 Add `--agent` to any command. Expands to: `--json --compact --no-input --no-color --yes`.

@@ -119,6 +119,9 @@ ensure your environment is correctly set up.`,
 			switch {
 			case len(authEnvRequiredMissing) > 0:
 				report["env_vars"] = "ERROR missing required: " + strings.Join(authEnvRequiredMissing, ", ")
+				if cfg != nil && cfg.AuthHeader() != "" {
+					report["auth_hint"] = "Token found in config but missing from environment. Run: eval $(skool-pp-cli auth env)"
+				}
 			case len(authEnvOptionalNames) > 1 && !authEnvOptionalSatisfied:
 				report["env_vars"] = "INFO set one of: " + strings.Join(authEnvOptionalNames, " or ")
 			case len(authEnvInfo) > 0:

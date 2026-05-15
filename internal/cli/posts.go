@@ -15,5 +15,6 @@ func newPostsCmd(flags *rootFlags) *cobra.Command {
 	}
 
 	cmd.AddCommand(newPostsCreateCmd(flags))
+	cmd.AddCommand(newPostsListCategoriesCmd(flags))
 	return cmd
 }

@@ -201,6 +201,7 @@ Add --agent to any command for JSON output + non-interactive mode.`,
 		}
 		return nil
 	}
+	rootCmd.AddCommand(newMeCmd(flags))
 	rootCmd.AddCommand(newInstallCmd())
 	rootCmd.AddCommand(newV017ae153ccc5Cmd(flags))
 	rootCmd.AddCommand(newNextCmd(flags))

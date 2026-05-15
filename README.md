@@ -103,6 +103,38 @@ skool-pp-cli doctor
 
 ## 📖 Basic Workflow
 
+### 👤 Identity & Communities
+Quickly see which communities you belong to and your user profile:
+
+1. **List your groups:**
+   ```bash
+   skool-pp-cli me groups
+   ```
+   This returns the Name, Hash (ID), and Slug for all your joined communities.
+
+2. **View your profile:**
+   ```bash
+   skool-pp-cli me info
+   ```
+
+### 📝 Creating Content
+To create a post, you first need to find the correct group and category:
+
+1. **Find the target group hash:**
+   ```bash
+   skool-pp-cli me groups
+   ```
+
+2. **List available categories for that group:**
+   ```bash
+   skool-pp-cli posts list-categories --group <hash>
+   ```
+
+3. **Create the post:**
+   ```bash
+   skool-pp-cli posts create <hash> --category <category-id> --title "My Title" --content "Body"
+   ```
+
 ### 💬 Direct Messaging
 You can now list your conversations and send messages directly from the CLI:
 

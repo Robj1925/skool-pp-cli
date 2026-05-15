@@ -35,8 +35,28 @@ session cookie to authenticate requests.`,
 	cmd.AddCommand(newAuthRefreshCmd(flags))
 	cmd.AddCommand(newAuthLoginCmd(flags))
 	cmd.AddCommand(newAuthImportHarCmd(flags))
+	cmd.AddCommand(newAuthEnvCmd(flags))
 
 	return cmd
+}
+
+func newAuthEnvCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "env",
+		Short: "Output shell export command for the current session token",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			token := cfg.AuthHeader()
+			if token == "" {
+				return fmt.Errorf("no session token configured. Run 'skool-pp-cli auth set-token' first.")
+			}
+			fmt.Printf("export SKOOL_API_KEY=%q\n", token)
+			return nil
+		},
+	}
 }
 
 func newAuthLoginCmd(flags *rootFlags) *cobra.Command {
