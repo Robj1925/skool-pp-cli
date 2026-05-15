@@ -5,12 +5,16 @@ const path = require('path');
   // Use a relative path so it works for any user
   const userDataDir = path.join(__dirname, '..', 'skoolbot_profile');
   console.log(`Launching browser with dedicated profile: ${userDataDir}`);
-  
-  const browser = await chromium.launchPersistentContext(userDataDir, {
-    headless: false,
-  });
-  
-  const page = await browser.newPage();
+  let browser, page;
+  try {
+    browser = await chromium.launchPersistentContext(userDataDir, {
+      headless: false,
+    });
+    page = await browser.newPage();
+  } catch (err) {
+    console.error(`FATAL: Failed to launch Playwright browser. Error: ${err.message}`);
+    process.exit(1);
+  }
 
   // CHECK IMMEDIATELY: Are we already logged in?
   const initialCookies = await browser.cookies();
@@ -26,26 +30,30 @@ const path = require('path');
   await page.goto("https://www.skool.com/chat");
 
   const checkInterval = setInterval(async () => {
-    console.log(`Current URL: ${page.url()}`);
-    const cookies = await browser.cookies();
-    if (cookies.some(c => c.name === 'auth_token')) {
-      console.log("Auth token detected in cookies!");
-      const cookieString = cookies.map(c => `${c.name}=${c.value}`).join('; ');
-      console.log(`COOKIE_RESULT=${cookieString}`);
-      clearInterval(checkInterval);
-      await browser.close();
-      process.exit(0);
+    try {
+      const cookies = await browser.cookies();
+      if (cookies.some(c => c.name === 'auth_token')) {
+        const cookieString = cookies.map(c => `${c.name}=${c.value}`).join('; ');
+        console.log(`COOKIE_RESULT=${cookieString}`);
+        clearInterval(checkInterval);
+        await browser.close();
+        process.exit(0);
+      }
+    } catch (err) {
+      // Ignore execution context errors during navigation
     }
   }, 2000);
 
   try {
-    await page.waitForTimeout(120000); // Wait up to 2 mins for the interval check to succeed
-    console.error("Timeout: Could not detect auth_token in cookies after 120 seconds.");
+    await page.waitForTimeout(600000); // Wait up to 10 mins
+    console.error("Timeout: Could not detect auth_token in cookies after 10 minutes.");
+    clearInterval(checkInterval);
     await browser.close();
     process.exit(1);
   } catch (err) {
+    console.error(`Browser session interrupted: ${err.message}`);
     clearInterval(checkInterval);
-    await browser.close();
+    try { await browser.close(); } catch (e) {}
     process.exit(1);
   }
 })();
