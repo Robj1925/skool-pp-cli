@@ -1,0 +1,9 @@
+{
+  "name": "skool-pp-cli-auth",
+  "version": "1.0.0",
+  "description": "Auth bridge for Skool CLI",
+  "main": "scripts/refresh_auth.js",
+  "dependencies": {
+    "playwright": "^1.42.0"
+  }
+}

@@ -6,6 +6,9 @@ package cli
 import (
 	"fmt"
 	"os"
+	"os/exec"
+	"regexp"
+	"strings"
 
 	"github.com/Robj1925/skool-pp-cli/internal/config"
 	"github.com/spf13/cobra"
@@ -21,8 +24,57 @@ func newAuthCmd(flags *rootFlags) *cobra.Command {
 	cmd.AddCommand(newAuthSetTokenCmd(flags))
 	cmd.AddCommand(newAuthLogoutCmd(flags))
 	cmd.AddCommand(newAuthRefreshCmd(flags))
+	cmd.AddCommand(newAuthLoginCmd(flags))
 
 	return cmd
+}
+
+func newAuthLoginCmd(flags *rootFlags) *cobra.Command {
+	return &cobra.Command{
+		Use:   "login",
+		Short: "Automated login using a browser (requires Python + Playwright)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			fmt.Println("Attempting automated session refresh...")
+			
+			// Check if script exists
+			scriptPath := "scripts/refresh_auth.js"
+			if _, err := os.Stat(scriptPath); os.IsNotExist(err) {
+				return fmt.Errorf("auth bridge script missing at %s", scriptPath)
+			}
+
+			// Run the node script
+			// Use npx to ensure playwright is available/installed on the fly if needed
+			fmt.Println("Starting Node.js automation...")
+			nodeCmd := exec.Command("node", scriptPath)
+			nodeCmd.Stderr = os.Stderr
+			output, err := nodeCmd.Output()
+			if err != nil {
+				return fmt.Errorf("browser automation failed: %w\n\nHint: Ensure you have playwright installed:\n  npm install playwright && npx playwright install chromium", err)
+			}
+
+			// Find the COOKIE_RESULT in the output
+			re := regexp.MustCompile(`COOKIE_RESULT=(.*)`)
+			matches := re.FindStringSubmatch(string(output))
+			if len(matches) < 2 {
+				return fmt.Errorf("could not find cookie result in automation output")
+			}
+
+			cookieString := strings.TrimSpace(matches[1])
+			
+			// Save the token
+			cfg, err := config.Load(flags.configPath)
+			if err != nil {
+				return err
+			}
+			cfg.AuthHeaderVal = ""
+			if err := cfg.SaveCredential(cookieString); err != nil {
+				return err
+			}
+
+			fmt.Println("Success! Stored fresh session cookies.")
+			return nil
+		},
+	}
 }
 
 func newAuthRefreshCmd(flags *rootFlags) *cobra.Command {

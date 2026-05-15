@@ -52,8 +52,8 @@ resources:
         endpoints:
             get_about.json:
                 method: GET
-                path: /_next/data/{id}/ai-academy-with-robby-6849/about.json
-                description: GET /_next/data/{id}/ai-academy-with-robby-6849/about.json
+                path: /_next/data/{id}/{group}/about.json
+                description: GET /_next/data/{id}/{group}/about.json
                 params:
                     - name: group
                       type: string
@@ -76,8 +76,8 @@ resources:
                 pagination: null
             get_calendar.json:
                 method: GET
-                path: /_next/data/{id}/ai-academy-with-robby-6849/calendar.json
-                description: GET /_next/data/{id}/ai-academy-with-robby-6849/calendar.json
+                path: /_next/data/{id}/{group}/calendar.json
+                description: GET /_next/data/{id}/{group}/calendar.json
                 params:
                     - name: group
                       type: string
@@ -100,8 +100,8 @@ resources:
                 pagination: null
             get_classroom.json:
                 method: GET
-                path: /_next/data/{id}/ai-academy-with-robby-6849/classroom.json
-                description: GET /_next/data/{id}/ai-academy-with-robby-6849/classroom.json
+                path: /_next/data/{id}/{group}/classroom.json
+                description: GET /_next/data/{id}/{group}/classroom.json
                 params:
                     - name: group
                       type: string
@@ -124,8 +124,8 @@ resources:
                 pagination: null
             get_leaderboards.json:
                 method: GET
-                path: /_next/data/{id}/ai-academy-with-robby-6849/-/leaderboards.json
-                description: GET /_next/data/{id}/ai-academy-with-robby-6849/-/leaderboards.json
+                path: /_next/data/{id}/{group}/-/leaderboards.json
+                description: GET /_next/data/{id}/{group}/-/leaderboards.json
                 params:
                     - name: group
                       type: string
@@ -148,8 +148,8 @@ resources:
                 pagination: null
             get_map.json:
                 method: GET
-                path: /_next/data/{id}/ai-academy-with-robby-6849/-/map.json
-                description: GET /_next/data/{id}/ai-academy-with-robby-6849/-/map.json
+                path: /_next/data/{id}/{group}/-/map.json
+                description: GET /_next/data/{id}/{group}/-/map.json
                 params:
                     - name: group
                       type: string
@@ -179,8 +179,8 @@ resources:
                 pagination: null
             get_members.json:
                 method: GET
-                path: /_next/data/{id}/ai-academy-with-robby-6849/-/members.json
-                description: GET /_next/data/{id}/ai-academy-with-robby-6849/-/members.json
+                path: /_next/data/{id}/{group}/-/members.json
+                description: GET /_next/data/{id}/{group}/-/members.json
                 params:
                     - name: group
                       type: string
@@ -204,9 +204,61 @@ resources:
                       description: ""
                       fields: []
                 body: []
+                pagination: null
+    channels:
+        description: Operations on chat channels
+        endpoints:
+            list:
+                method: GET
+                path: /self/chat-channels
+                description: GET /self/chat-channels
+                params:
+                    - name: offset
+                    - name: limit
+                    - name: last
+                    - name: unread-only
+                body: []
                 response:
                     type: object
-                    item: members.json
+                    item: channels
+                pagination: null
+            create_message:
+                method: POST
+                path: /channels/{channel_id}/messages
+                description: POST /channels/{channel_id}/messages
+                params:
+                    - name: channel_id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The channel (chat) ID
+                      fields: []
+                    - name: ct
+                      type: string
+                      required: false
+                      positional: false
+                      default: wdm
+                      description: Client type marker
+                      fields: []
+                body:
+                    - name: content
+                      type: string
+                      required: true
+                      positional: false
+                      default: null
+                      description: Message content
+                      fields: []
+                    - name: attachments
+                      type: array
+                      required: false
+                      positional: false
+                      default: []
+                      description: Message attachments
+                      fields: []
+                response:
+                    type: object
+                    item: message
                 pagination: null
     017ae153ccc5:
         description: Operations on inputs

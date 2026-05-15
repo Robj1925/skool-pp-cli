@@ -51,11 +51,16 @@ Skool uses a session-based cookie for authentication. You will need to "sniff" y
 5. Find the row where the Name is **NOT** `auth_token` but rather the entire string containing your session info. 
    > **Tip:** You can also just go to the **Network** tab, refresh the page, click on any request to `www.skool.com`, and copy the entire value of the `Cookie` header from the **Request Headers** section.
 
-### 2. Set the Token in CLI
-Copy the entire cookie string and run:
+### 2. Automated Session Refresh (Recommended)
+If you have Node.js installed, the CLI can automatically refresh your session by opening a browser window:
 ```bash
-skool-pp-cli auth set-token "client_id=...; auth_token=...; etc..."
+# First time setup (installs browser)
+npm install && npx playwright install chromium
+
+# Launch automated login
+skool-pp-cli auth login
 ```
+This will open a dedicated "SkoolBot" browser profile. Once you log in, the CLI will capture your tokens and close the window automatically.
 
 ### 3. Verify Connection
 Run the "doctor" command to ensure everything is working:
@@ -66,6 +71,20 @@ skool-pp-cli doctor
 ---
 
 ## 📖 Basic Workflow
+
+### 💬 Direct Messaging
+You can now list your conversations and send messages directly from the CLI:
+
+1. **List your chat history:**
+   ```bash
+   skool-pp-cli channels list
+   ```
+   This will output a list of your recent conversations with their unique `channel_id`.
+
+2. **Send a message:**
+   ```bash
+   skool-pp-cli channels send <CHANNEL_ID> --content "Hello from the CLI!"
+   ```
 
 ### 1. Synchronize Data
 Before running analytics, you need a local copy of your data:
