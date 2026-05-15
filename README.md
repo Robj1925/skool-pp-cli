@@ -56,8 +56,9 @@ If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "in
    ```
 3. **Handle Authentication (CRITICAL):** Do not attempt browser automation. Use one of these two methods, preferring HAR import:
     - **Method A: HAR Import (Most Reliable - RECOMMENDED)**
-      - Instruct the human to open Skool in their browser, go to DevTools -> Network, **REFRESH the page**, right-click any request, and select "Save all as HAR with content".
-      - Have them provide you with the file path and run `./skool-pp-cli auth import-har path/to/export.har`.
+      - Instruct the human to go to DevTools -> Network. **Chrome only**: Click Gear Icon -> Check "Allow to generate HAR with sensitive data".
+      - **CRITICAL**: Refresh the page, then export the HAR (choose "with sensitive data" in Chrome).
+      - Run `./skool-pp-cli auth import-har path/to/export.har`.
    - **Method B: Manual Cookie (Fallback)**
      - Instruct the human user to open their browser, log in to Skool, and open Developer Tools (Network tab).
      - Tell them to copy the `cookie:` header from any request (like `members.json`).
@@ -74,10 +75,15 @@ Skool uses session-based authentication. The CLI provides tools to capture and m
 This is the most reliable way to authenticate. Export a HAR file from your browser and import it:
 1. Open skool.com in your browser and log in.
 2. Open DevTools (F12) -> **Network** tab.
-3. **CRITICAL**: Refresh the page while the Network tab is open.
-4. Click on any group or community to ensure traffic is recorded.
-5. Right-click any request in the list and select **"Save all as HAR with content"**.
-6. Run: `skool-pp-cli auth import-har path/to/export.har`
+3. **Chrome Users (IMPORTANT)**: 
+   - Click the **Gear Icon** (Settings) in the top-right of the Network tab.
+   - Ensure **"Allow to generate HAR with sensitive data"** is checked.
+4. **CRITICAL**: Refresh the page while the Network tab is open.
+5. Click on any group or community to ensure traffic is recorded.
+6. Export the file:
+   - **Chrome**: Click the **Download icon** (Export HAR) and choose **"Export HAR (with sensitive data)"**.
+   - **Others**: Right-click any request and select **"Save all as HAR with content"**.
+7. Run: `skool-pp-cli auth import-har path/to/export.har`
 
 ### 2. Manual Cookie (Fallback)
 If you prefer to copy the cookie string manually:

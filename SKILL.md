@@ -140,9 +140,10 @@ Skool uses session-based authentication. The most reliable way to authenticate i
 
 1. **Instruct the human user to provide session data:**
    - **Method A: HAR Import (Recommended)**
-     - Ask the human to log in to Skool, open DevTools -> Network tab, and **REFRESH the page**.
-     - Instruct them to right-click any request and select "Save all as HAR with content".
-     - Ask them to provide the path to the HAR file, then run: `skool-pp-cli auth import-har /path/to/file.har`
+     - Ask the human to log in to Skool and open DevTools -> Network.
+     - **Chrome only**: Instruct them to click the Gear Icon and check "Allow to generate HAR with sensitive data".
+     - Tell them to **REFRESH the page** and then export the HAR (choose "with sensitive data" if in Chrome).
+     - Run: `skool-pp-cli auth import-har /path/to/file.har`
    - **Method B: Manual Cookie**
      - Ask the human to copy the `cookie:` header from a Skool API request and run: `skool-pp-cli auth set-token "YOUR_COOKIE_STRING"`
 2. Run `skool-pp-cli doctor --agent` to verify connectivity.
