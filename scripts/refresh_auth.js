@@ -8,7 +8,6 @@ const path = require('path');
   
   const browser = await chromium.launchPersistentContext(userDataDir, {
     headless: false,
-    channel: 'chrome',
   });
   
   const page = await browser.newPage();
