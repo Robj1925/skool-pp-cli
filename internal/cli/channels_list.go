@@ -4,7 +4,6 @@ package cli
 
 import (
 	"fmt"
-	"strings"
 	"github.com/spf13/cobra"
 )
 
@@ -47,19 +46,7 @@ func newChannelsListCmd(flags *rootFlags) *cobra.Command {
 				"Content-Type":      "application/json",
 			}
 
-			// Extract WAF token from config cookies to mirror in x-aws-waf-token header
-			if c.Config != nil && c.Config.SkoolApiKey != "" {
-				cookies := c.Config.SkoolApiKey
-				parts := strings.Split(cookies, ";")
-				for _, p := range parts {
-					p = strings.TrimSpace(p)
-					if strings.HasPrefix(p, "aws-waf-token=") {
-						wafToken := strings.TrimPrefix(p, "aws-waf-token=")
-						headers["x-aws-waf-token"] = wafToken
-						break
-					}
-				}
-			}
+
 
 			data, err := c.GetWithHeaders(path, params, headers)
 			if err != nil {

@@ -508,7 +508,7 @@ func determinePaginationDefaults() paginationDefaults {
 	return paginationDefaults{
 		cursorParam: "after",
 		limitParam:  "limit",
-		limit:       100,
+		limit:       30,
 	}
 }
 
@@ -796,12 +796,7 @@ func parseSinceDuration(s string) (time.Time, error) {
 
 func defaultSyncResources() []string {
 	return []string{
-		"017ae153ccc5",
-		"affiliates",
-		"maps",
-		"maps-streets-v2-sprite-json",
-		"tiles",
-		"wait",
+		"channels",
 	}
 }
 
@@ -810,12 +805,7 @@ func defaultSyncResources() []string {
 // this preserves the actual endpoint path like "/ISteamApps/GetAppList/v2".
 func syncResourcePath(resource string) (string, error) {
 	paths := map[string]string{
-		"017ae153ccc5":                "/017ae153ccc5/4aa4380fa03e/inputs",
-		"affiliates":                  "/affiliates/v2/compensations",
-		"maps":                        "/maps/streets-v2/style.json",
-		"maps-streets-v2-sprite-json": "/maps/streets-v2/sprite.json",
-		"tiles":                       "/tiles/v3/tiles.json",
-		"wait":                        "/wait",
+		"channels": "/self/chat-channels",
 	}
 	if p, ok := paths[resource]; ok {
 		return p, nil

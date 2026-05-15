@@ -220,6 +220,16 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 		if authHeader != "" {
 			// Add as cookie instead of sentry_key query param
 			req.Header.Set("Cookie", authHeader)
+			
+			// Automate WAF token extraction for all requests
+			parts := strings.Split(authHeader, ";")
+			for _, p := range parts {
+				p = strings.TrimSpace(p)
+				if strings.HasPrefix(p, "aws-waf-token=") {
+					req.Header.Set("x-aws-waf-token", strings.TrimPrefix(p, "aws-waf-token="))
+					break
+				}
+			}
 		}
 		if c.Config != nil {
 			for k, v := range c.Config.Headers {
@@ -230,8 +240,16 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 		for k, v := range headerOverrides {
 			req.Header.Set(k, v)
 		}
-		if req.Header.Get("User-Agent") == "" {
-			req.Header.Set("User-Agent", "github.com/Robj1925/skool-pp-cli/0.1.0")
+		
+		// Spoof standard browser headers to bypass basic WAF mitigation
+		if req.Header.Get("User-Agent") == "" || req.Header.Get("User-Agent") == "github.com/Robj1925/skool-pp-cli/0.1.0" {
+			req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36")
+		}
+		if req.Header.Get("Origin") == "" {
+			req.Header.Set("Origin", "https://www.skool.com")
+		}
+		if req.Header.Get("Referer") == "" {
+			req.Header.Set("Referer", "https://www.skool.com/")
 		}
 
 		resp, err := c.HTTPClient.Do(req)
@@ -246,6 +264,18 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 			return nil, 0, fmt.Errorf("reading response: %w", err)
 		}
 		respBody = sanitizeJSONResponse(respBody)
+
+		// Detect HTML error pages (e.g. WAF/Cloudflare 200 OK challenge pages)
+		contentType := resp.Header.Get("Content-Type")
+		if !strings.Contains(contentType, "application/json") && len(respBody) > 0 && bytes.HasPrefix(bytes.TrimSpace(respBody), []byte("<")) {
+			apiErr := &APIError{
+				Method:     method,
+				Path:       path,
+				StatusCode: resp.StatusCode,
+				Body:       "Received HTML response instead of JSON. This is likely a WAF block or 404 page.\n\n" + truncateBody(respBody),
+			}
+			return nil, resp.StatusCode, apiErr
+		}
 
 		// Success
 		if resp.StatusCode < 400 {
