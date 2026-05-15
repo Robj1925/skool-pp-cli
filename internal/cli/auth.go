@@ -4,6 +4,7 @@
 package cli
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -45,11 +46,12 @@ func newAuthLoginCmd(flags *rootFlags) *cobra.Command {
 			// Run the node script
 			// Use npx to ensure playwright is available/installed on the fly if needed
 			fmt.Println("Starting Node.js automation...")
+			var stderrBuf bytes.Buffer
 			nodeCmd := exec.Command("node", scriptPath)
-			nodeCmd.Stderr = os.Stderr
+			nodeCmd.Stderr = &stderrBuf
 			output, err := nodeCmd.Output()
 			if err != nil {
-				return fmt.Errorf("browser automation failed: %w\n\nHint: Ensure you have playwright installed:\n  npm install playwright && npx playwright install chromium", err)
+				return fmt.Errorf("browser automation failed: %w\n\nNode Error Output:\n%s\n\nHint: Ensure you have playwright installed:\n  npm install playwright && npx playwright install chromium", err, stderrBuf.String())
 			}
 
 			// Find the COOKIE_RESULT in the output
