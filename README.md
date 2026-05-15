@@ -54,7 +54,7 @@ If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "in
    ```
 3. **Handle Authentication (CRITICAL):** The command `./skool-pp-cli auth login` opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens. 
    - **WARNING:** Do NOT run `node scripts/refresh_auth.js` directly. The Node script only extracts the token; the Go binary (`./skool-pp-cli auth login`) is required to actually save it to the config file.
-   - If running the command in the background, wait for the Go process to finish successfully before assuming the token is saved.
+   - If running the command in the background, use `command_status` and wait patiently (up to 120 seconds) for the human to finish. Do NOT attempt to run other commands in the meantime.
 4. **Verify:** Once the process finishes, run `./skool-pp-cli doctor --agent` to verify connectivity.
 
 ---
