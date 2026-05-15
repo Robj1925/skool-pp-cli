@@ -41,41 +41,18 @@ func newSyncCmd(flags *rootFlags) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "sync",
-		Short: "Sync API data to local SQLite for offline search and analysis",
-		Long: `Sync data from the API into a local SQLite database. Supports resumable
-incremental sync (only fetches new data since last sync) and full resync.
-Once synced, use the 'search' command for instant full-text search.
+		Short: "Sync community data to local SQLite",
+		Long: `Synchronizes core community data from the Skool API to your local 
+SQLite database. This enables offline search and high-speed analytics.
 
-Exit codes & warnings:
-  Resources the API denies access to (HTTP 403, or HTTP 400 with an
-  access-policy body) are reported as warnings rather than failing the
-  run. In --json mode each is emitted as a {"event":"sync_warning",...}
-  line carrying status, reason, and message fields, and a final
-  {"event":"sync_summary",...} aggregates the run.
+Current syncable resources:
+  - channels: Chat conversations and channel metadata
 
-  Exit 0 when at least one resource synced and no resource flagged in
-  the spec as critical (x-critical: true) failed; non-critical failures
-  emit {"event":"sync_warning","reason":"exit_policy_default_changed",
-  ...} so callers can detect that a partial failure was tolerated. Pass
-  --strict to exit non-zero on any per-resource failure. Exit is always
-  non-zero when every selected resource failed, regardless of --strict.`,
-		Example: `  # Sync all resources
-  skool-pp-cli sync
-
-  # Sync specific resources only
-  skool-pp-cli sync --resources channels,messages
-
-  # Full resync (ignore previous checkpoint)
-  skool-pp-cli sync --full
-
-  # Incremental sync: only records from the last 7 days
-  skool-pp-cli sync --since 7d
-
-  # Parallel sync with 8 workers
-  skool-pp-cli sync --concurrency 8
-
-  # Latest-only: refresh head of each resource, no historical backfill
-  skool-pp-cli sync --latest-only`,
+Note: For group-specific member lists or classroom content, use the 
+'next' command group. For deep analytics, use 'groups' or 'insights'.`,
+		Example: `  skool-pp-cli sync
+  skool-pp-cli sync --resources channels
+  skool-pp-cli sync --full`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()
 			if err != nil {

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -77,6 +78,9 @@ ensure your environment is correctly set up.`,
   skool-pp-cli doctor --fail-on error`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			report := map[string]any{}
+			
+			// Check System Prereqs
+			report["system"] = checkSystemPrerequisites()
 
 			// Check config
 			cfg, err := config.Load(flags.configPath)
@@ -229,6 +233,31 @@ ensure your environment is correctly set up.`,
 				{"api", "API"},
 				{"credentials", "Credentials"},
 			}
+			
+			// Print system block first
+			if sysAny, ok := report["system"]; ok {
+				if sys, ok := sysAny.(map[string]any); ok {
+					indicator := green("OK")
+					for _, v := range sys {
+						if s, ok := v.(string); ok && strings.HasPrefix(s, "ERROR") {
+							indicator = red("FAIL")
+							break
+						}
+					}
+					fmt.Fprintf(cmd.OutOrStdout(), "  %s System:\n", indicator)
+					for _, k := range []string{"go", "node", "npm"} {
+						if v, ok := sys[k]; ok {
+							s := fmt.Sprintf("%v", v)
+							if strings.HasPrefix(s, "ERROR") {
+								fmt.Fprintf(cmd.OutOrStdout(), "    %s: %s\n", k, red(s))
+							} else {
+								fmt.Fprintf(cmd.OutOrStdout(), "    %s: %s\n", k, s)
+							}
+						}
+					}
+				}
+			}
+
 			for _, ck := range checkKeys {
 				v, ok := report[ck.key]
 				if !ok {
@@ -282,6 +311,36 @@ ensure your environment is correctly set up.`,
 	}
 	cmd.Flags().StringVar(&failOn, "fail-on", "", "Exit non-zero when a health level is reached: stale, error. Default is never.")
 	return cmd
+}
+
+func checkSystemPrerequisites() map[string]any {
+	prereqs := map[string]any{}
+
+	// Check Go
+	if path, err := exec.LookPath("go"); err == nil {
+		out, _ := exec.Command(path, "version").Output()
+		prereqs["go"] = strings.TrimSpace(string(out))
+	} else {
+		prereqs["go"] = "ERROR: not found (required v1.21+)"
+	}
+
+	// Check Node
+	if path, err := exec.LookPath("node"); err == nil {
+		out, _ := exec.Command(path, "--version").Output()
+		prereqs["node"] = strings.TrimSpace(string(out))
+	} else {
+		prereqs["node"] = "ERROR: not found (required for auth helpers)"
+	}
+
+	// Check npm
+	if path, err := exec.LookPath("npm"); err == nil {
+		out, _ := exec.Command(path, "--version").Output()
+		prereqs["npm"] = strings.TrimSpace(string(out))
+	} else {
+		prereqs["npm"] = "ERROR: not found"
+	}
+
+	return prereqs
 }
 
 // doctorExitForFailOn returns a non-nil error when the report's worst

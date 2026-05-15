@@ -45,18 +45,21 @@ var whichIndex = []whichEntry{
 	{Command: "envelope create_envelope", Description: "POST /api/{id}/envelope/", Group: "envelope"},
 	{Command: "f get_f", Description: "GET /f/{hash}/{hash}", Group: "f"},
 	{Command: "groups create_count_pending_invites", Description: "POST /groups/{hash}/count-pending-invites", Group: "groups"},
-	{Command: "groups get_admin_metrics", Description: "GET /groups/{hash}/admin-metrics", Group: "groups"},
-	{Command: "groups get_analytics_growth_overview_v2", Description: "GET /groups/{hash}/analytics-growth-overview-v2", Group: "groups"},
+	{Command: "groups get_admin_metrics", Description: "GET /groups/{hash}/admin-metrics (Group analytics)", Group: "groups"},
 	{Command: "groups get_analytics_overview_v2", Description: "GET /groups/{hash}/analytics-overview-v2", Group: "groups"},
-	{Command: "groups get_billing_payout_data", Description: "GET /groups/{hash}/billing-payout-data", Group: "groups"},
-	{Command: "groups get_discovery", Description: "GET /groups/{hash}/discovery", Group: "groups"},
-	{Command: "groups get_member_course_permissions", Description: "GET /groups/{hash}/member-course-permissions", Group: "groups"},
-	{Command: "maps list_sprite.json", Description: "GET /maps/streets-v2/sprite.json", Group: "maps"},
-	{Command: "maps list_style.json", Description: "GET /maps/streets-v2/style.json", Group: "maps"},
-	{Command: "tiles get_1.pbf", Description: "GET /tiles/v3/{id}/{id}/1.pbf", Group: "tiles"},
-	{Command: "tiles get_2.pbf", Description: "GET /tiles/v3/{id}/{id}/2.pbf", Group: "tiles"},
-	{Command: "tiles list_tiles.json", Description: "GET /tiles/v3/tiles.json", Group: "tiles"},
-	{Command: "wait list_wait", Description: "GET /wait", Group: "wait"},
+	{Command: "groups get_discovery", Description: "GET /groups/{hash}/discovery (Find groups)", Group: "groups"},
+	{Command: "next get_members.json", Description: "GET /-/members.json (List community members)", Group: "next"},
+	{Command: "next get_classroom.json", Description: "GET /classroom.json (List courses/classroom)", Group: "next"},
+	{Command: "sync", Description: "Sync all community data to local SQLite", Group: "sync"},
+	{Command: "doctor", Description: "Check CLI health and system requirements", Group: "doctor"},
+	{Command: "auth import-har", Description: "Login by importing a HAR file (Recommended)", Group: "auth"},
+	{Command: "channels list", Description: "List chat conversations and channels", Group: "channels"},
+	
+	// Intent Aliases (to help agents find commands by purpose)
+	{Command: "next get_members.json", Description: "list members, community members, member list", Group: "next"},
+	{Command: "next get_classroom.json", Description: "list courses, classroom content", Group: "next"},
+	{Command: "groups get_discovery", Description: "list my groups, find groups, group list", Group: "groups"},
+	{Command: "channels list", Description: "list conversations, my chats, message history", Group: "channels"},
 }
 
 // whichMatch pairs an index entry with its ranking score for a query.
@@ -141,6 +144,12 @@ func whichScoreEntry(e whichEntry, query string, qTokens []string) int {
 	// Substring match on the description.
 	if strings.Contains(desc, query) {
 		score += 2
+	}
+	// Token match on the description.
+	for _, qt := range qTokens {
+		if strings.Contains(desc, qt) {
+			score += 1
+		}
 	}
 	// Group tag match.
 	if group != "" {

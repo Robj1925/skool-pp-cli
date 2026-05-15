@@ -60,14 +60,31 @@ func Execute() error {
 	rootCmd := newRootCmd(&flags)
 
 	err := rootCmd.Execute()
-	if err != nil && strings.Contains(err.Error(), "unknown flag") {
+	if err != nil {
 		msg := err.Error()
-		// Extract the flag name from the error message (e.g., "unknown flag: --foob")
-		if idx := strings.Index(msg, "unknown flag: "); idx >= 0 {
-			flagStr := strings.TrimSpace(msg[idx+len("unknown flag: "):])
-			if suggestion := suggestFlag(flagStr, rootCmd); suggestion != "" {
-				return fmt.Errorf("%w\nhint: did you mean --%s?", err, suggestion)
+		handled := false
+		if strings.Contains(msg, "unknown flag") {
+			if idx := strings.Index(msg, "unknown flag: "); idx >= 0 {
+				flagStr := strings.TrimSpace(msg[idx+len("unknown flag: "):])
+				if suggestion := suggestFlag(flagStr, rootCmd); suggestion != "" {
+					fmt.Fprintf(os.Stderr, "Error: %v\nhint: did you mean --%s?\n", err, suggestion)
+					handled = true
+				}
 			}
+		} else if strings.Contains(msg, "unknown command") {
+			if idx := strings.Index(msg, "unknown command"); idx >= 0 {
+				parts := strings.Split(msg, "\"")
+				if len(parts) >= 2 {
+					unknownCmd := parts[1]
+					if suggestion := suggestCommand(unknownCmd, rootCmd); suggestion != "" {
+						fmt.Fprintf(os.Stderr, "Error: %v\nhint: did you mean '%s'?\n", err, suggestion)
+						handled = true
+					}
+				}
+			}
+		}
+		if !handled {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		}
 	}
 	if err == nil && flags.deliverBuf != nil {
@@ -104,8 +121,9 @@ Common Workflows:
   4. Run Analytics:  skool-pp-cli analytics-domain orphans
 
 Add --agent to any command for JSON output + non-interactive mode.`,
-		SilenceUsage: true,
-		Version:      version,
+		SilenceUsage:  true,
+		SilenceErrors: true,
+		Version:       version,
 	}
 	rootCmd.SetVersionTemplate("skool-pp-cli {{ .Version }}\n")
 
@@ -183,6 +201,7 @@ Add --agent to any command for JSON output + non-interactive mode.`,
 		}
 		return nil
 	}
+	rootCmd.AddCommand(newInstallCmd())
 	rootCmd.AddCommand(newV017ae153ccc5Cmd(flags))
 	rootCmd.AddCommand(newNextCmd(flags))
 	rootCmd.AddCommand(newAffiliatesCmd(flags))
@@ -214,6 +233,72 @@ Add --agent to any command for JSON output + non-interactive mode.`,
 	rootCmd.AddCommand(newAnalyticsDomainCmd(flags))
 
 	return rootCmd
+}
+
+// suggestCommand searches the command tree for the closest match to an unknown command.
+func suggestCommand(unknown string, cmd *cobra.Command) string {
+	best := ""
+	bestScore := 0.0
+
+	for _, sub := range cmd.Commands() {
+		score := stringSimilarity(unknown, sub.Name())
+		if score > bestScore && score > 0.6 {
+			best = sub.Name()
+			bestScore = score
+		}
+		for _, alias := range sub.Aliases {
+			score := stringSimilarity(unknown, alias)
+			if score > bestScore && score > 0.6 {
+				best = sub.Name()
+				bestScore = score
+			}
+		}
+	}
+	return best
+}
+
+func stringSimilarity(s1, s2 string) float64 {
+	if s1 == s2 {
+		return 1.0
+	}
+	if len(s1) == 0 || len(s2) == 0 {
+		return 0.0
+	}
+	// Simple Levenshtein-based similarity
+	distance := levenshtein(s1, s2)
+	maxLen := len(s1)
+	if len(s2) > maxLen {
+		maxLen = len(s2)
+	}
+	return 1.0 - float64(distance)/float64(maxLen)
+}
+
+func levenshtein(s1, s2 string) int {
+	d := make([][]int, len(s1)+1)
+	for i := range d {
+		d[i] = make([]int, len(s2)+1)
+		d[i][0] = i
+	}
+	for j := range d[0] {
+		d[0][j] = j
+	}
+	for i := 1; i <= len(s1); i++ {
+		for j := 1; j <= len(s2); j++ {
+			cost := 1
+			if s1[i-1] == s2[j-1] {
+				cost = 0
+			}
+			d[i][j] = min(d[i-1][j]+1, min(d[i][j-1]+1, d[i-1][j-1]+cost))
+		}
+	}
+	return d[len(s1)][len(s2)]
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 func ExitCode(err error) int {
