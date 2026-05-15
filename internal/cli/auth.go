@@ -264,9 +264,10 @@ browser automation is blocked or unstable.
 How to get a HAR file:
 1. Open skool.com in your browser and log in.
 2. Open Developer Tools (F12) -> Network tab.
-3. Refresh the page or click a community.
-4. Right-click any request and select 'Save all as HAR with content'.
-5. Run: skool-pp-cli auth import-har path/to/export.har`,
+3. CRITICAL: Refresh the page while the Network tab is open.
+4. Click on any community or chat to record traffic.
+5. Right-click any request and select 'Save all as HAR with content'.
+6. Run: skool-pp-cli auth import-har path/to/export.har`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := args[0]

@@ -136,13 +136,16 @@ skool-pp-cli which "<capability in your own words>"
 `which` resolves a natural-language capability query to the best matching command from this CLI's curated feature index. Exit code `0` means at least one match; exit code `2` means no confident match — fall back to `--help` or use a narrower query.
 
 ## Auth Setup
-Skool uses session-based authentication.
+Skool uses session-based authentication. The most reliable way to authenticate is by importing a HAR file from your browser.
 
-1. **Instruct the human user to authenticate manually:**
-   - Ask the human to open their browser, log in to Skool, and open Developer Tools (Network tab).
-   - Tell them to find a request (like `members.json`) and copy the entire value of the `cookie:` header.
-   - Instruct the human to provide you with the cookie string, or tell them to run `skool-pp-cli auth set-token "YOUR_COOKIE_STRING"` themselves.
-2. Run `skool-pp-cli doctor --agent` to verify setup.
+1. **Instruct the human user to provide session data:**
+   - **Method A: HAR Import (Recommended)**
+     - Ask the human to log in to Skool, open DevTools -> Network tab, and **REFRESH the page**.
+     - Instruct them to right-click any request and select "Save all as HAR with content".
+     - Ask them to provide the path to the HAR file, then run: `skool-pp-cli auth import-har /path/to/file.har`
+   - **Method B: Manual Cookie**
+     - Ask the human to copy the `cookie:` header from a Skool API request and run: `skool-pp-cli auth set-token "YOUR_COOKIE_STRING"`
+2. Run `skool-pp-cli doctor --agent` to verify connectivity.
 
 ## Agent Mode
 

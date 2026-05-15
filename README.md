@@ -55,9 +55,9 @@ If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "in
    git clone https://github.com/Robj1925/skool-pp-cli.git && cd skool-pp-cli && npm install && npx playwright install chromium && go build -o skool-pp-cli ./cmd/skool-pp-cli
    ```
 3. **Handle Authentication (CRITICAL):** Do not attempt browser automation. Use one of these two methods, preferring HAR import:
-   - **Method A: HAR Import (Most Reliable - RECOMMENDED)**
-     - Instruct the human to open Skool in their browser, go to DevTools -> Network, right-click any request, and select "Save all as HAR with content".
-     - Have them provide you with the file path and run `./skool-pp-cli auth import-har path/to/export.har`.
+    - **Method A: HAR Import (Most Reliable - RECOMMENDED)**
+      - Instruct the human to open Skool in their browser, go to DevTools -> Network, **REFRESH the page**, right-click any request, and select "Save all as HAR with content".
+      - Have them provide you with the file path and run `./skool-pp-cli auth import-har path/to/export.har`.
    - **Method B: Manual Cookie (Fallback)**
      - Instruct the human user to open their browser, log in to Skool, and open Developer Tools (Network tab).
      - Tell them to copy the `cookie:` header from any request (like `members.json`).
@@ -74,9 +74,10 @@ Skool uses session-based authentication. The CLI provides tools to capture and m
 This is the most reliable way to authenticate. Export a HAR file from your browser and import it:
 1. Open skool.com in your browser and log in.
 2. Open DevTools (F12) -> **Network** tab.
-3. Refresh the page or click a community.
-4. Right-click any request in the list and select **"Save all as HAR with content"**.
-5. Run: `skool-pp-cli auth import-har path/to/export.har`
+3. **CRITICAL**: Refresh the page while the Network tab is open.
+4. Click on any group or community to ensure traffic is recorded.
+5. Right-click any request in the list and select **"Save all as HAR with content"**.
+6. Run: `skool-pp-cli auth import-har path/to/export.har`
 
 ### 2. Manual Cookie (Fallback)
 If you prefer to copy the cookie string manually:
