@@ -60,7 +60,9 @@ npm install && npx playwright install chromium
 # Launch automated login
 skool-pp-cli auth login
 ```
-This will open a dedicated "SkoolBot" browser profile. Once you log in, the CLI will capture your tokens and close the window automatically.
+This will open a dedicated **"SkoolBot"** browser profile. Once you log in, the CLI will capture your tokens and close the window automatically. 
+
+> **Pro Tip:** Using a dedicated profile means you can keep your personal Chrome windows open while the CLI runs its automation in the background!
 
 ### 3. Verify Connection
 Run the "doctor" command to ensure everything is working:
