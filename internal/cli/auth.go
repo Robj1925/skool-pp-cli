@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"os"
 	"os/exec"
 	"regexp"
@@ -279,6 +280,7 @@ How to get a HAR file:
 				Log struct {
 					Entries []struct {
 						Request struct {
+							URL     string `json:"url"`
 							Headers []struct {
 								Name  string `json:"name"`
 								Value string `json:"value"`
@@ -293,23 +295,42 @@ How to get a HAR file:
 			}
 
 			var bestCookie string
+			var domainsFound []string
 			for _, entry := range har.Log.Entries {
-				for _, header := range entry.Request.Headers {
-					if strings.ToLower(header.Name) == "cookie" {
-						// Look for cookies containing auth material
-						if strings.Contains(header.Value, "auth_token") {
-							bestCookie = header.Value
-							break
+				u, err := url.Parse(entry.Request.URL)
+				if err != nil {
+					continue
+				}
+				
+				isSkool := strings.Contains(u.Host, "skool.com")
+				if isSkool {
+					for _, header := range entry.Request.Headers {
+						if strings.ToLower(header.Name) == "cookie" {
+							// Look for cookies containing auth material
+							if strings.Contains(header.Value, "auth_token") || strings.Contains(header.Value, "aws-waf-token") {
+								bestCookie = header.Value
+								break
+							}
 						}
 					}
+				} else {
+					domainsFound = append(domainsFound, u.Host)
 				}
+				
 				if bestCookie != "" {
 					break
 				}
 			}
 
 			if bestCookie == "" {
-				return fmt.Errorf("no session cookies found in HAR file. Ensure the HAR includes an authenticated request to skool.com")
+				msg := "no session cookies found in HAR file.\n"
+				if len(har.Log.Entries) == 0 {
+					msg += "The HAR file appears to be empty (0 entries)."
+				} else {
+					msg += fmt.Sprintf("Found %d requests, but none contained Skool authentication material.\n", len(har.Log.Entries))
+					msg += "Ensure you REFRESH the page while the Network tab is open before exporting."
+				}
+				return fmt.Errorf(msg)
 			}
 
 			cfg, err := config.Load(flags.configPath)
