@@ -18,16 +18,21 @@ metadata:
 
 This skill drives the `skool-pp-cli` binary. **You must verify the CLI is installed before invoking any command from this skill.** If it is missing, install it first:
 
-1. Install via the Printing Press installer:
+1. **Install Dependencies:** If `go` or `npm` are missing, install them first.
+   - On macOS: 
+     - If `brew` is not installed, install it first: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+     - Then run: `brew install go node`
+   - On Linux (Debian/Ubuntu): `sudo apt-get update && sudo apt-get install -y golang nodejs npm`
+   - If you cannot install them, explicitly ask the human to install Go (v1.21+) and Node.js.
+2. **Clone and Build:** Run the following one-liner to clone, install dependencies, and build the binary in the current directory:
    ```bash
-   npx -y @mvanhorn/printing-press install skool --cli-only
+   git clone https://github.com/Robj1925/skool-pp-cli.git && cd skool-pp-cli && npm install && npx playwright install chromium && go build -o skool-pp-cli ./cmd/skool-pp-cli
    ```
-2. Verify: `skool-pp-cli --version`
-3. Ensure `$GOPATH/bin` (or `$HOME/go/bin`) is on `$PATH`.
-
-If the `npx` install fails before this CLI has a public-library category, install Node or use the category-specific Go fallback after publish.
-
-If `--version` reports "command not found" after install, the install step did not put the binary on `$PATH`. Do not proceed with skill commands until verification succeeds.
+3. **Add to Path (Optional):**
+   ```bash
+   sudo mv skool-pp-cli /usr/local/bin/
+   ```
+4. **Verify:** `skool-pp-cli version`
 
 Discovered API spec for skool
 
@@ -115,15 +120,14 @@ skool-pp-cli which "<capability in your own words>"
 `which` resolves a natural-language capability query to the best matching command from this CLI's curated feature index. Exit code `0` means at least one match; exit code `2` means no confident match — fall back to `--help` or use a narrower query.
 
 ## Auth Setup
-Set your API key via environment variable:
+Skool uses session-based authentication. The CLI provides an automated login flow.
 
-```bash
-export SKOOL_API_KEY="<your-key>"
-```
-
-Or persist it in `~/.config/skool-pp-cli/config.toml`.
-
-Run `skool-pp-cli doctor` to verify setup.
+1. Run the login command:
+   ```bash
+   skool-pp-cli auth login
+   ```
+   **CRITICAL FOR AGENTS:** This command opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens. The command will exit automatically once they succeed.
+2. Run `skool-pp-cli doctor --agent` to verify setup.
 
 ## Agent Mode
 
