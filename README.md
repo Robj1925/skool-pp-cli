@@ -42,7 +42,11 @@ Ensure you have [Go](https://go.dev/dl/) installed (v1.21+) and [Node.js](https:
 ## 🤖 Instructions for AI Agents
 If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "install this CLI tool", follow these exact steps:
 
-1. **Clone and Build:** Run the following one-liner to clone, install dependencies, and build the binary in the current directory:
+1. **Install Dependencies:** If `go` or `npm` are missing, install them first.
+   - On macOS: `brew install go node`
+   - On Linux (Debian/Ubuntu): `sudo apt-get update && sudo apt-get install -y golang nodejs npm`
+   - If you cannot install them, explicitly ask the human to install Go (v1.21+) and Node.js.
+2. **Clone and Build:** Run the following one-liner to clone, install dependencies, and build the binary in the current directory:
    ```bash
    git clone https://github.com/Robj1925/skool-pp-cli.git && cd skool-pp-cli && npm install && npx playwright install chromium && go build -o skool-pp-cli ./cmd/skool-pp-cli
    ```
