@@ -1,6 +1,8 @@
 # HAR capture files contain session cookies — NEVER commit
 *.har
 *.har.bak
+*_matches.txt
+*.txt
 
 # Generated spec (contains internal endpoint details)
 skool-spec-generated.yaml
