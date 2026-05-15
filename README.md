@@ -19,7 +19,7 @@ A high-performance command-line interface for Skool community owners and power u
 
 ### From Source (Recommended)
 
-Ensure you have [Go](https://go.dev/dl/) installed (v1.21+).
+Ensure you have [Go](https://go.dev/dl/) installed (v1.21+) and [Node.js](https://nodejs.org/).
 
 1. Clone the repository:
    ```bash
@@ -36,6 +36,18 @@ Ensure you have [Go](https://go.dev/dl/) installed (v1.21+).
    ```bash
    sudo mv skool-pp-cli /usr/local/bin/
    ```
+
+---
+
+## 🤖 Instructions for AI Agents
+If you are an AI Agent (e.g., Claude Code, Codex, Antigravity) instructed to "install this CLI tool", follow these exact steps:
+
+1. **Clone and Build:** Run the following one-liner to clone, install dependencies, and build the binary in the current directory:
+   ```bash
+   git clone https://github.com/Robj1925/skool-pp-cli.git && cd skool-pp-cli && npm install && npx playwright install chromium && go build -o skool-pp-cli ./cmd/skool-pp-cli
+   ```
+2. **Handle Authentication (CRITICAL):** The command `./skool-pp-cli auth login` opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens. The command will exit automatically once they succeed.
+3. **Verify:** Once the user confirms they have logged in, run `./skool-pp-cli doctor --agent` to verify connectivity.
 
 ---
 
