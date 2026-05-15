@@ -58,7 +58,10 @@ var whichIndex = []whichEntry{
 	// Intent Aliases (to help agents find commands by purpose)
 	{Command: "next get_members.json", Description: "list members, community members, member list", Group: "next"},
 	{Command: "next get_classroom.json", Description: "list courses, classroom content", Group: "next"},
-	{Command: "groups get_discovery", Description: "list my groups, find groups, group list", Group: "groups"},
+	{Command: "me groups", Description: "list my groups, show my communities, who am i", Group: "me"},
+	{Command: "me info", Description: "my profile, user info, account details", Group: "me"},
+	{Command: "posts list-categories", Description: "list categories, find category id, group categories", Group: "posts"},
+	{Command: "auth env", Description: "export token, set environment variable, auth helper", Group: "auth"},
 	{Command: "channels list", Description: "list conversations, my chats, message history", Group: "channels"},
 }
 
