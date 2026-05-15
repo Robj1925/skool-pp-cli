@@ -126,7 +126,9 @@ Skool uses session-based authentication. The CLI provides an automated login flo
    ```bash
    skool-pp-cli auth login
    ```
-   **CRITICAL FOR AGENTS:** This command opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens. The command will exit automatically once they succeed.
+   **CRITICAL FOR AGENTS:** This command opens a GUI browser on the user's machine. **Do not attempt to automate the browser login yourself.** Run the command and immediately instruct the human user to complete the login in the window that opens.
+   - **WARNING:** Do NOT run `node scripts/refresh_auth.js` directly. The Node script only extracts the token; the Go binary (`./skool-pp-cli auth login`) is required to actually save it to the config file.
+   - If running the command in the background, wait for the Go process to finish successfully before assuming the token is saved.
 2. Run `skool-pp-cli doctor --agent` to verify setup.
 
 ## Agent Mode
