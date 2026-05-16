@@ -30,63 +30,62 @@ func newMeGroupsCmd(flags *rootFlags) *cobra.Command {
 				return err
 			}
 
-			path := "/self/chat-channels"
-			params := map[string]string{
-				"offset":      "0",
-				"limit":       "30",
-				"last":        "true",
-				"unread-only": "false",
-			}
-
-			data, err := c.GetWithHeaders(path, params, skoolHeaders())
+			// Endpoint Swap: Change from /self/chat-channels to /self/groups
+			path := "/self/groups"
+			data, err := c.GetWithHeaders(path, nil, skoolHeaders())
 			if err != nil {
 				return classifyAPIError(err, flags)
 			}
 
-			var channels []map[string]any
-			if err := json.Unmarshal(data, &channels); err != nil {
-				return fmt.Errorf("parsing response: %w", err)
-			}
-
-			type GroupInfo struct {
-				Name string `json:"name"`
-				Hash string `json:"hash"`
-				Slug string `json:"slug"`
-			}
-			
-			groupsMap := make(map[string]GroupInfo)
-			for _, ch := range channels {
-				if gAny, ok := ch["group"]; ok {
-					if g, ok := gAny.(map[string]any); ok {
-						name, _ := g["name"].(string)
-						hash, _ := g["id"].(string)
-						slug, _ := g["slug"].(string)
-						if hash != "" {
-							groupsMap[hash] = GroupInfo{Name: name, Hash: hash, Slug: slug}
-						}
-					}
+			var groupsData []map[string]any
+			if err := json.Unmarshal(data, &groupsData); err != nil {
+				// Handle wrapped response { "groups": [...] }
+				var wrapped struct {
+					Groups []map[string]any `json:"groups"`
+				}
+				if err2 := json.Unmarshal(data, &wrapped); err2 == nil {
+					groupsData = wrapped.Groups
+				} else {
+					return fmt.Errorf("parsing response: %w", err)
 				}
 			}
 
-			var groups []map[string]any
-			for _, g := range groupsMap {
-				groups = append(groups, map[string]any{
-					"Name": g.Name,
-					"Hash": g.Hash,
-					"Slug": g.Slug,
-				})
+			var results []map[string]any
+			for _, g := range groupsData {
+				// Metadata Mapping: Use display_name from metadata or top-level
+				name := ""
+				if metadata, ok := g["metadata"].(map[string]any); ok {
+					name, _ = metadata["display_name"].(string)
+				}
+				if name == "" {
+					name, _ = g["display_name"].(string)
+				}
+				if name == "" {
+					name, _ = g["name"].(string)
+				}
+
+				hash, _ := g["id"].(string)
+				slug, _ := g["name"].(string)
+
+				if hash != "" {
+					results = append(results, map[string]any{
+						"Name": name,
+						"Hash": hash,
+						"Slug": slug,
+					})
+				}
 			}
 
 			if flags.asJSON {
-				return printJSONFiltered(cmd.OutOrStdout(), groups, flags)
+				return printJSONFiltered(cmd.OutOrStdout(), results, flags)
 			}
 
-			if len(groups) == 0 {
+			if len(results) == 0 {
 				fmt.Fprintln(os.Stderr, "No groups found.")
 				return nil
 			}
 
-			return printAutoTable(cmd.OutOrStdout(), groups)
+			return printAutoTable(cmd.OutOrStdout(), results)
 		},
 	}
 }

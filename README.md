@@ -191,13 +191,14 @@ skool-pp-cli insights level-velocity
 | `auth set-token` | Configures your session cookie manually. |
 | `auth import-har` | Extract session cookies from a browser HAR export. |
 | `channels` | List chat conversations and send direct messages. |
+| `me` | List your joined communities and user profile. |
 | `groups` | Access group-specific analytics and management metrics. |
 | `doctor` | Connectivity, auth, and local database health check. |
 | `search` | Instant full-text search across your local community data. |
 
 ### ✍️ Writing Content
 
-You can create posts in any group where you have permission. You need the group's unique hash (found in the URL or via `skool-pp-cli groups list`).
+You can create posts in any group where you have permission. You need the group's unique hash (found in the URL or via `skool-pp-cli me groups`).
 
 ```bash
 # Create a post (defaults to 'General discussion' category)

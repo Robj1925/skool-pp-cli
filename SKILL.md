@@ -79,6 +79,7 @@ This CLI uses standard HTTP transport with HTTP/2 disabled for browser-facing en
 - `skool-pp-cli auth import-har` — Extract cookies from HAR file
 - `skool-pp-cli auth set-token` — Save session cookie
 - `skool-pp-cli auth status` — Check auth health
+- `skool-pp-cli auth env` — Export session token for sub-shells
 
 **channels** — Direct messaging and chat channels
 
@@ -101,6 +102,11 @@ This CLI uses standard HTTP transport with HTTP/2 disabled for browser-facing en
 - `skool-pp-cli insights level-velocity` — Track growth speed
 - `skool-pp-cli insights engagement-health` — Global community health score
 
+**me** — User identity and community discovery
+
+- `skool-pp-cli me groups` — List your joined communities (Hash, Name, Slug)
+- `skool-pp-cli me info` — Show your Skool user profile
+
 **maps** — Map styles and assets
 
 - `skool-pp-cli maps list_sprite.json` — GET /maps/streets-v2/sprite.json
@@ -109,6 +115,7 @@ This CLI uses standard HTTP transport with HTTP/2 disabled for browser-facing en
 **posts** — Manage community posts
 
 - `skool-pp-cli posts create` — Create a new post
+- `skool-pp-cli posts list-categories` — List categories for a community
 
 **sync** — Data synchronization
 
